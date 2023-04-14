@@ -1,6 +1,9 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty
+from kivy.lang import Builder
+
+Builder.load_file('KV files/whatever.kv')
 
 
 class MyGridLayout(Widget):
@@ -22,10 +25,10 @@ class MyGridLayout(Widget):
         self.color.text = ''
 
 
-class MyApp(App):
+class AwsomeApp(App):
     def build(self):
         return MyGridLayout()
 
 
 if __name__ == '__main__':
-    MyApp().run()
+    AwsomeApp().run()
