@@ -1,0 +1,96 @@
+#:import utils kivy.utils
+
+<Label>
+    canvas.before:
+        Color:
+            rgba: (1,1,1,1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    color: (0,0,0,1)
+
+
+<MyLayout>
+    BoxLayout:
+        size: root.width, root.height
+        orientation: "vertical"
+
+        padding: 10
+        spacing: 5
+
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Login"
+            font_size: "15pt"
+
+            pos_hint: {'center_x': 0.5}
+            size_hint: (None, None)
+            height: 25
+            width: 100
+
+        Image:
+            source: "Resources/Imgs/Logo.png"
+
+        GridLayout:
+            cols: 2
+            spacing: 3
+
+            Label:
+                text: "Email:"
+                font_size: "11pt"
+                pos_hint: {'center_y': 0.5}
+                size_hint: (None, None)
+                width: 38
+                height: 30
+
+            TextInput:
+                multiline: False
+                font_size: "11pt"
+                pos_hint: {'center_y': 0.5}
+                size_hint: (None, None)
+                width: 326
+                height: 30
+
+            Label:
+                text: "Senha:"
+                font_size: "11pt"
+                pos_hint: {'center_y': 0.5}
+                size_hint: (None, None)
+                width: 38
+                height: 30
+
+            TextInput:
+                multiline: False
+                font_size: "11pt"
+                pos_hint: {'center_y': 0.5}
+                size_hint: (None, None)
+                width: 326
+                height: 30
+
+        Button:
+            text: "Login"
+            pos_hint: {'center_x': 0.5}
+            size_hint: (None, None)
+            height: 25
+            width: 90
+
+        Button:
+            text: "Registrar-se"
+            pos_hint: {'center_x': 0.5}
+            size_hint: (None, None)
+            height: 25
+            width: 90
+
+
+
+
+
+
+
+
