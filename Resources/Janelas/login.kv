@@ -1,5 +1,26 @@
 #:import utils kivy.utils
 
+<TextInput>
+    canvas.before:
+        Color:
+            rgba: (0, 0, 0, 1)
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+    background_normal: ''
+    background_color: (1, 1, 1, 1)
+
+<Button>
+    canvas.before:
+        Color:
+            rgba: (.5, .5, .5, 1)
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+    background_normal: ''
+    background_color: (1, 1, 1, 1)
+
+
 <Label>
     canvas.before:
         Color:
@@ -39,7 +60,7 @@
 
         GridLayout:
             cols: 2
-            spacing: 3
+            spacing: 8
 
             Label:
                 text: "Email:"
@@ -50,12 +71,15 @@
                 height: 30
 
             TextInput:
+                id: email_input
                 multiline: False
                 font_size: "11pt"
                 pos_hint: {'center_y': 0.5}
                 size_hint: (None, None)
                 width: 326
                 height: 30
+                do_wrap: False
+                write_tab: False
 
             Label:
                 text: "Senha:"
@@ -66,12 +90,27 @@
                 height: 30
 
             TextInput:
+                id: password_input
+                password: True
                 multiline: False
                 font_size: "11pt"
                 pos_hint: {'center_y': 0.5}
                 size_hint: (None, None)
                 width: 326
                 height: 30
+                do_wrap: False
+                write_tab: False
+
+        Label:
+            text: ""
+            id: error_login
+            font_size: "10pt"
+            pos_hint: {'center_x': 0.5}
+            size_hint: (None, None)
+            height: 25
+            width: 100
+            color: (1,0,0,1)
+
 
         Button:
             text: "Login"
@@ -79,6 +118,7 @@
             size_hint: (None, None)
             height: 25
             width: 90
+            on_press: root.btn_login()
 
         Button:
             text: "Registrar-se"
@@ -86,6 +126,7 @@
             size_hint: (None, None)
             height: 25
             width: 90
+            on_press: root.btn_register()
 
 
 
