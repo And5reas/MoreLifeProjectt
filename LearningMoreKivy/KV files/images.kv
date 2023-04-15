@@ -1,0 +1,34 @@
+#:import utils kivy.utils
+<Button>
+    background_normal: ''
+    background_color: utils.get_color_from_hex("#2ea8ff")
+
+<TextInput>
+    background_color: utils.get_color_from_hex("#0cf232")
+
+<Label>
+    font_size: 32
+
+<MyLayout>
+    # change window bg color
+    canvas.before:
+        Color:
+            rgba: (1,0,0,0.7)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        Image:
+            source: "Linda.jpg"
+            # allow_stretch: True
+            # keep_ratio: True
+
+        Label:
+            text: "Bonicha '-'"
+            size_hint: (None, None)
+            pos_hint: {'center_x': 0.5}
+            width: 20
+            height: 20
