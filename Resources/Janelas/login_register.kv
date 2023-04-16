@@ -1,13 +1,14 @@
 WindowManager:
     JanelaLogin:
     JanelaRegistrar:
+    JanelaMain:
 
 <TextInput>
     canvas.before:
         Color:
             rgba: (0, 0, 0, 1)
         Line:
-            width: 2
+            width: 1.1
             rectangle: self.x, self.y, self.width, self.height
     background_normal: ''
     background_color: (1, 1, 1, 1)
@@ -58,7 +59,7 @@ WindowManager:
             width: 100
 
         Image:
-            source: "Resources/Imgs/Logo.png"
+            source: "Resources/Imgs/Logo_pequeno.png"
 
         GridLayout:
             cols: 2
@@ -118,7 +119,7 @@ WindowManager:
             size_hint: (None, None)
             height: 25
             width: 90
-            on_press: root.btn_login()
+            on_release: if root.btn_login(): app.root.current = "main_screen"
 
         Button:
             text: "Registrar-se"
@@ -156,7 +157,7 @@ WindowManager:
             width: 100
 
         Image:
-            source: "Resources/Imgs/Logo.png"
+            source: "Resources/Imgs/Logo_pequeno.png"
 
 
         GridLayout:
@@ -258,3 +259,47 @@ WindowManager:
                 on_release:
                     app.root.current = "login_screen"
                     root.manager.transition.direction = "down"
+
+<JanelaMain>:
+    name: "main_screen"
+    GridLayout:
+        size: root.width, root.height
+        cols: 2
+
+        padding: 40
+        spacing: 40
+
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: "vertical"
+
+            spacing: 40
+
+            Image:
+                source: "Resources/Imgs/Logo.png"
+
+            BoxLayout:
+                size: (83, 210)
+                orientation: "vertical"
+
+                Button:
+                    text: "Principal"
+
+                Button:
+                    text: "Relatórios"
+
+                Button:
+                    text: "Conta"
+
+                Button:
+                    text: "Configurações"
+
+        BoxLayout:
+            Label:
+                text: "You are dying '-'"

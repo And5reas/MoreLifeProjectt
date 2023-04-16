@@ -1,11 +1,34 @@
+from kivy.config import Config
+Config.set('graphics','resizable',0)
+
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.config import Config
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.core.window import Window
+import sys
 
-Config.set('graphics', 'resizable', '0')  # Configurar a janela para não poder ser redimensionada
-Config.set('graphics', 'width', '420')  # "Setar" a largura da janela
-Config.set('graphics', 'height', '350')  # "Setar" a altura da janela
+# Checar qual o tamanho do monitor do usuário
+if sys.platform == 'linux2':
+    import subprocess
+    output = subprocess.Popen(
+        'xrandr | grep "\*" | cut -d" " -f4',
+        shell=True,
+        stdout=subprocess.PIPE).communicate()[0]
+    screen_x = int(output.replace('\n', '').split('x')[0])
+    screen_y = int(output.replace('\n', '').split('x')[1])
+elif sys.platform == 'win32':
+    from win32api import GetSystemMetrics
+    screen_x = GetSystemMetrics(0)
+    screen_y = GetSystemMetrics(1)
+else:
+    # For mobile devices, use full screen
+    screen_x, screen_y = 800, 600  # return something
+
+
+def center_window(size_x, size_y):
+    Window.size = (size_x, size_y)
+    Window.left = (screen_x - size_x) / 2
+    Window.top = (screen_y - size_y) / 2
 
 
 # Dedinir outra tela
@@ -19,16 +42,27 @@ class JanelaLogin(Screen):
             nome_user_email, domain_email = user_email.split("@")
             print(f"Nome do email: {nome_user_email}\nServidor: {domain_email}")
             print(f"Email: {user_email}\nSenha: {user_password}")
+            if nome_user_email == "Andreas" and user_password == "batata123":
+                return True
         else:
             self.ids.error_login.text = "Email e/ou senha inválido(s)"
 
         # Limpar TextInputs
         self.ids.email_input.text = ""
         self.ids.password_input.text = ""
+        return False
+
+    def on_pre_enter(self):
+        center_window(420, 350)
 
 
 class JanelaRegistrar(Screen):
     pass
+
+
+class JanelaMain(Screen):
+    def on_pre_enter(self):
+        center_window(1280, 720)
 
 
 class WindowManager(ScreenManager):
@@ -39,10 +73,10 @@ kv = Builder.load_file('Resources/Janelas/login_register.kv')  # "Chamar" o arqu
 # (Obs: Se tiver mais de uma janela é preciso declarar essa variável antes do windowManager)
 
 
-class Login(App):
+class MoreLife(App):
     def build(self):
         return kv
 
 
 if __name__ == '__main__':
-    Login().run()
+    MoreLife().run()
