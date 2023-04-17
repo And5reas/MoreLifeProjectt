@@ -23,6 +23,16 @@ WindowManager:
     background_normal: ''
     background_color: (1, 1, 1, 1)
 
+<ButtonSemStyle@Button>
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+    background_normal: ''
+    background_color: 0, 0, 0, 0
+
 
 <Label>
     canvas.before:
@@ -32,6 +42,14 @@ WindowManager:
             size: self.size
             pos: self.pos
     color: (0,0,0,1)
+
+<CheckBox>
+    canvas.before:
+        Color:
+            rgba: (0,0,0,1)
+        Line:
+            width: 1
+            rectangle: self.x, self.y, self.width, self.height
 
 <JanelaLogin>:
     name: "login_screen"
@@ -101,6 +119,41 @@ WindowManager:
                 height: 30
                 do_wrap: False
                 write_tab: False
+
+            Label:
+                text: ""
+                # Label para pular uma coluna do grid
+
+            BoxLayout
+                orientation: "horizontal"
+                spacing: 10
+
+                Label:
+                    text: "[ref=Lembrar senha e email?]Lembrar senha e email?[/ref]"
+                    pos_hint: {'center_y': 0.5}
+                    markup: True
+                    size_hint: (None, None)
+                    width: 155
+                    height: 40
+                    on_ref_press: root.keep_login(1)
+
+                CheckBox:
+                    id: check_keep_login
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (None, None)
+                    width: 15
+                    height: 15
+                    on_active: root.keep_login()
+
+                ButtonSemStyle:
+                    on_press: root.remove_password_mask()
+                    background_disabled_normal: str(False)
+                    Image:
+                        id: eye_password_mask
+                        y: self.parent.y + self.parent.height - 30
+                        x: self.parent.x + 110
+                        size: 30, 30
+                        source: "Resources\Imgs\ZoioFechado.png"
 
         Label:
             text: ""

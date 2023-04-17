@@ -33,6 +33,7 @@ def center_window(size_x, size_y):
 
 # Dedinir outra tela
 class JanelaLogin(Screen):
+    checar = True
     def btn_login(self):
         user_email = self.ids.email_input.text
         user_password = self.ids.password_input.text
@@ -55,6 +56,19 @@ class JanelaLogin(Screen):
     def on_pre_enter(self):
         center_window(420, 350)
 
+    def remove_password_mask(self):
+        if not self.checar:
+            self.checar = True
+            self.ids.eye_password_mask.source = "Resources\Imgs\ZoioFechado.png"
+        else:
+            self.checar = False
+            self.ids.eye_password_mask.source = "Resources\Imgs\ZoioAberto.png"
+        self.ids.password_input.password = self.checar
+
+    def keep_login(self, ref=0):
+        if ref == 1:
+            self.ids.check_keep_login.active = True
+
 
 class JanelaRegistrar(Screen):
     pass
@@ -69,7 +83,7 @@ class WindowManager(ScreenManager):
     pass
 
 
-kv = Builder.load_file('Resources/Janelas/login_register.kv')  # "Chamar" o arquivo kivy
+kv = Builder.load_file('Resources/janelas.kv')  # "Chamar" o arquivo kivy
 # (Obs: Se tiver mais de uma janela é preciso declarar essa variável antes do windowManager)
 
 
