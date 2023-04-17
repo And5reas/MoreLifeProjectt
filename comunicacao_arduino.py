@@ -1,6 +1,7 @@
 import serial.tools.list_ports
 import serial
 
+
 def connect(ports):
     try:
         for onePort in ports:
@@ -21,6 +22,7 @@ def connect(ports):
             print("Não foi possível achar nenhuma porta COM...")
             return connect(ports)
 
+
 def readArd(serialArd, option):
     serialArd.baudrate = 115200
     serialArd.port = option
@@ -35,7 +37,8 @@ def readArd(serialArd, option):
     else:
         print("Opção não válida...")
         return readArd(serialArd, option)
-    
+
+
 ports = serial.tools.list_ports.comports()
 serialArd = serial.Serial()
 
