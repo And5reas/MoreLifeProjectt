@@ -100,6 +100,7 @@ WindowManager:
                 height: 30
                 do_wrap: False
                 write_tab: False
+                on_text: root.validate_color()
 
             Label:
                 text: "Senha:"
@@ -119,6 +120,7 @@ WindowManager:
                 height: 30
                 do_wrap: False
                 write_tab: False
+                on_text: root.validate_color()
 
             Label:
                 text: ""
@@ -212,7 +214,6 @@ WindowManager:
         Image:
             source: "Resources/Imgs/Logo_pequeno.png"
 
-
         GridLayout:
             cols: 2
             spacing: 8
@@ -233,6 +234,7 @@ WindowManager:
                 height: 30
                 do_wrap: False
                 write_tab: False
+                on_text: root.validate_color()
 
             Label:
                 text: "Email:"
@@ -250,6 +252,7 @@ WindowManager:
                 height: 30
                 do_wrap: False
                 write_tab: False
+                on_text: root.validate_color()
 
             Label:
                 text: "Senha:"
@@ -268,6 +271,7 @@ WindowManager:
                 height: 30
                 do_wrap: False
                 write_tab: False
+                on_text: root.validate_color()
 
             Label:
                 text: "Confirmar senha:"
@@ -287,6 +291,7 @@ WindowManager:
                 height: 30
                 do_wrap: False
                 write_tab: False
+                on_text: root.validate_color()
 
         BoxLayout:
             cols: 2
@@ -295,13 +300,13 @@ WindowManager:
             size: 70, 70
             pos_hint: {"center_x": .5}
 
-
             Button:
                 text: "Registrar conta"
                 pos_hint: {'center_x': .5}
                 size_hint: (None, None)
                 height: 25
                 width: 120
+                on_press: root.cadastrar()
 
             Button:
                 text: "Voltar"

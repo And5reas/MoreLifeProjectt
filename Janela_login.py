@@ -46,12 +46,16 @@ class JanelaLogin(Screen):
             if nome_user_email == "Andreas" and user_password == "batata123":
                 return True
         else:
+            self.ids.password_input.background_color = (212/255, 25/255, 32/255, .6)
+            self.ids.email_input.background_color = (212/255, 25/255, 32/255, .6)
             self.ids.error_login.text = "Email e/ou senha inválido(s)"
-
-        # Limpar TextInputs
-        self.ids.email_input.text = ""
-        self.ids.password_input.text = ""
         return False
+
+    def validate_color(self):
+        if self.ids.password_input.background_color != (1, 1, 1, 1):
+            self.ids.password_input.background_color = (1, 1, 1, 1)
+        if self.ids.email_input.background_color != (1, 1, 1, 1):
+            self.ids.email_input.background_color = (1, 1, 1, 1)
 
     def on_pre_enter(self):
         center_window(420, 350)
@@ -71,12 +75,30 @@ class JanelaLogin(Screen):
 
 
 class JanelaRegistrar(Screen):
-    pass
+    def cadastrar(self):
+        nome = self.ids.user_name.text
+        email = self.ids.email_register.text
+        senha = self.ids.password_register.text
+        senha_comfirmar = self.ids.password_confirm_register.text
+        if senha != senha_comfirmar:
+            self.ids.password_register.background_color = (212/255, 25/255, 32/255, .6)
+            self.ids.password_confirm_register.background_color = (212 / 255, 25 / 255, 32 / 255, .6)
+        elif "@" not in email:
+            self.ids.email_register.background_color = (212 / 255, 25 / 255, 32 / 255, .6)
+        else:
+            print(nome, email, senha, senha_comfirmar)
 
+    def validate_color(self):
+        if self.ids.password_register.background_color != (1, 1, 1, 1):
+            self.ids.password_register.background_color = (1, 1, 1, 1)
+        if self.ids.password_confirm_register.background_color != (1, 1, 1, 1):
+            self.ids.password_confirm_register.background_color = (1, 1, 1, 1)
+        if self.ids.email_register.background_color != (1, 1, 1, 1):
+            self.ids.email_register.background_color = (1, 1, 1, 1)
 
 class JanelaMain(Screen):
     def on_pre_enter(self):
-        center_window(1280, 720)
+        center_window(1024, 600)
 
 
 class WindowManager(ScreenManager):
