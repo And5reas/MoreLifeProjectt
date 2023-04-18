@@ -1,7 +1,11 @@
+#: import NoTransition kivy.uix.screenmanager.NoTransition
+
 WindowManager:
     JanelaLogin:
     JanelaRegistrar:
     JanelaMain:
+    JanelaReport:
+    JanelaConfig:
 
 <TextInput>
     canvas.before:
@@ -318,6 +322,31 @@ WindowManager:
                     app.root.current = "login_screen"
                     root.manager.transition.direction = "down"
 
+<GridPrincipal@GridLayout>
+    canvas.before:
+        Color:
+            rgba: (.5, .5, .5, 1)
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+
+<GridReport@GridLayout>
+    canvas.before:
+        Color:
+            rgba: (.5, .5, .5, 1)
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+
+<GridConfig@GridLayout>
+    canvas.before:
+        Color:
+            rgba: (.5, .5, .5, 1)
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+
+
 <JanelaMain>:
     name: "main_screen"
     GridLayout:
@@ -348,16 +377,136 @@ WindowManager:
 
                 Button:
                     text: "Principal"
+                    on_release:
+                        root.manager.transition = NoTransition()
+                        app.root.current = "main_screen"
 
                 Button:
                     text: "Relatórios"
+                    on_release:
+                        root.manager.transition = NoTransition()
+                        app.root.current = "report_screen"
 
                 Button:
                     text: "Conta"
 
                 Button:
                     text: "Configurações"
+                    on_release:
+                        root.manager.transition = NoTransition()
+                        app.root.current = "config_screen"
+
+        GridPrincipal:
+            cols: 4
+            rows: 4
+
+            Label:
+                text: "Principal"
+
+<JanelaReport>:
+    name: "report_screen"
+    GridLayout:
+        size: root.width, root.height
+        cols: 2
+
+        padding: 40
+        spacing: 40
+
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
 
         BoxLayout:
+            orientation: "vertical"
+
+            spacing: 40
+
+            Image:
+                source: "Resources/Imgs/Logo.png"
+
+            BoxLayout:
+                size: (83, 210)
+                orientation: "vertical"
+
+                Button:
+                    text: "Principal"
+                    on_release:
+                        app.root.current = "main_screen"
+
+                Button:
+                    text: "Relatórios"
+                    on_release:
+                        app.root.current = "report_screen"
+
+                Button:
+                    text: "Conta"
+
+                Button:
+                    text: "Configurações"
+                    on_release:
+                        app.root.current = "config_screen"
+
+        GridReport:
+            cols: 4
+            rows: 4
+
             Label:
-                text: "You are dying '-'"
+                text: "Relatórios"
+
+<JanelaConfig>:
+    name: "config_screen"
+    GridLayout:
+        size: root.width, root.height
+        cols: 2
+
+        padding: 40
+        spacing: 40
+
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: "vertical"
+
+            spacing: 40
+
+            Image:
+                source: "Resources/Imgs/Logo.png"
+
+            BoxLayout:
+                size: (83, 210)
+                orientation: "vertical"
+
+                Button:
+                    text: "Principal"
+                    on_release:
+                        app.root.current = "main_screen"
+
+                Button:
+                    text: "Relatórios"
+                    on_release:
+                        app.root.current = "report_screen"
+
+                Button:
+                    text: "Conta"
+
+                Button:
+                    text: "Configurações"
+                    on_release:
+                        app.root.current = "config_screen"
+
+        GridConfig:
+            cols: 4
+            rows: 4
+
+            Label:
+                text: "Configurações"
+
+

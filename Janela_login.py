@@ -1,5 +1,5 @@
 from kivy.config import Config
-Config.set('graphics','resizable',0)
+Config.set('graphics', 'resizable', 0)
 
 from kivy.app import App
 from kivy.lang import Builder
@@ -43,7 +43,7 @@ class JanelaLogin(Screen):
             nome_user_email, domain_email = user_email.split("@")
             print(f"Nome do email: {nome_user_email}\nServidor: {domain_email}")
             print(f"Email: {user_email}\nSenha: {user_password}")
-            if nome_user_email == "Andreas" and user_password == "batata123":
+            if nome_user_email == "Andreas" and user_password == "123":
                 return True
         else:
             self.ids.password_input.background_color = (212/255, 25/255, 32/255, .6)
@@ -96,9 +96,20 @@ class JanelaRegistrar(Screen):
         if self.ids.email_register.background_color != (1, 1, 1, 1):
             self.ids.email_register.background_color = (1, 1, 1, 1)
 
+
 class JanelaMain(Screen):
     def on_pre_enter(self):
-        center_window(1024, 600)
+        center_window(*tamanho_tela)
+
+
+class JanelaReport(Screen):
+    def on_pre_enter(self):
+        center_window(*tamanho_tela)
+
+
+class JanelaConfig(Screen):
+    def on_pre_enter(self):
+        center_window(*tamanho_tela)
 
 
 class WindowManager(ScreenManager):
@@ -108,9 +119,11 @@ class WindowManager(ScreenManager):
 kv = Builder.load_file('Resources/janelas.kv')  # "Chamar" o arquivo kivy
 # (Obs: Se tiver mais de uma janela é preciso declarar essa variável antes do windowManager)
 
+tamanho_tela = (1024, 600)
 
 class MoreLife(App):
     def build(self):
+        self.icon = "Resources/Imgs/icon.png"
         return kv
 
 
