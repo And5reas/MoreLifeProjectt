@@ -43,7 +43,8 @@ class JanelaLogin(Screen):
             nome_user_email, domain_email = user_email.split("@")
             print(f"Nome do email: {nome_user_email}\nServidor: {domain_email}")
             print(f"Email: {user_email}\nSenha: {user_password}")
-            if nome_user_email == "Andreas" and user_password == "123":
+            if nome_user_email == "1" and user_password == "123":
+                center_window(*tamanho_tela)
                 return True
         else:
             self.ids.password_input.background_color = (212/255, 25/255, 32/255, .6)
@@ -74,42 +75,27 @@ class JanelaLogin(Screen):
             self.ids.check_keep_login.active = True
 
 
-class JanelaRegistrar(Screen):
-    def cadastrar(self):
-        nome = self.ids.user_name.text
-        email = self.ids.email_register.text
-        senha = self.ids.password_register.text
-        senha_comfirmar = self.ids.password_confirm_register.text
-        if senha != senha_comfirmar:
-            self.ids.password_register.background_color = (212/255, 25/255, 32/255, .6)
-            self.ids.password_confirm_register.background_color = (212 / 255, 25 / 255, 32 / 255, .6)
-        elif "@" not in email:
-            self.ids.email_register.background_color = (212 / 255, 25 / 255, 32 / 255, .6)
-        else:
-            print(nome, email, senha, senha_comfirmar)
-
-    def validate_color(self):
-        if self.ids.password_register.background_color != (1, 1, 1, 1):
-            self.ids.password_register.background_color = (1, 1, 1, 1)
-        if self.ids.password_confirm_register.background_color != (1, 1, 1, 1):
-            self.ids.password_confirm_register.background_color = (1, 1, 1, 1)
-        if self.ids.email_register.background_color != (1, 1, 1, 1):
-            self.ids.email_register.background_color = (1, 1, 1, 1)
-
-
 class JanelaMain(Screen):
     def on_pre_enter(self):
-        center_window(*tamanho_tela)
+        pass
 
 
 class JanelaReport(Screen):
     def on_pre_enter(self):
-        center_window(*tamanho_tela)
+        pass
 
 
 class JanelaConfig(Screen):
+    def change_tema(self, tema):
+        if tema == "Dark":
+            self.ids.spinner_tema.color = (0, 1, 0, 1)
+
+    def change_resolution(self, resolution):
+        h, w = resolution.split(',')
+        center_window(int(h), int(w))
+
     def on_pre_enter(self):
-        center_window(*tamanho_tela)
+        self.ids.resolucao_config.values = resolutions
 
 
 class WindowManager(ScreenManager):
@@ -120,6 +106,10 @@ kv = Builder.load_file('Resources/janelas.kv')  # "Chamar" o arquivo kivy
 # (Obs: Se tiver mais de uma janela é preciso declarar essa variável antes do windowManager)
 
 tamanho_tela = (1024, 600)
+resolutions = ['1920, 1080', '1680, 1050', '1600, 1024', '1600, 900', '1440, 900', '1366, 768', '1280, 1024',
+               '1280, 960', '1280, 800', '1280, 768', '1280, 720', '1152, 864', '1024, 768', '1024, 720', '1024, 600',
+               '800, 600']
+
 
 class MoreLife(App):
     def build(self):

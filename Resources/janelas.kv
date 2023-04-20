@@ -2,12 +2,11 @@
 
 WindowManager:
     JanelaLogin:
-    JanelaRegistrar:
     JanelaMain:
     JanelaReport:
     JanelaConfig:
 
-<TextInput>
+<TextInput>:
     canvas.before:
         Color:
             rgba: (0, 0, 0, 1)
@@ -17,7 +16,8 @@ WindowManager:
     background_normal: ''
     background_color: (1, 1, 1, 1)
 
-<Button>
+<Button>:
+    id: style_buttons
     canvas.before:
         Color:
             rgba: (.5, .5, .5, 1)
@@ -27,7 +27,7 @@ WindowManager:
     background_normal: ''
     background_color: (1, 1, 1, 1)
 
-<ButtonSemStyle@Button>
+<ButtonSemStyle@Button>:
     canvas.before:
         Color:
             rgba: (1, 1, 1, 1)
@@ -37,8 +37,18 @@ WindowManager:
     background_normal: ''
     background_color: 0, 0, 0, 0
 
+<Spinner>:
+    canvas.before:
+        Color:
+            rgba: (.5, .5, .5, 1)
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+    background_normal: ''
+    background_color: (1, 1, 1, 1)
 
-<Label>
+
+<Label>:
     canvas.before:
         Color:
             rgba: (1,1,1,1)
@@ -47,7 +57,7 @@ WindowManager:
             pos: self.pos
     color: (0,0,0,1)
 
-<CheckBox>
+<CheckBox>:
     canvas.before:
         Color:
             rgba: (0,0,0,1)
@@ -186,141 +196,6 @@ WindowManager:
             size_hint: (None, None)
             height: 25
             width: 90
-            on_release:
-                app.root.current = "register_screen"
-                root.manager.transition.direction = "up"
-
-<JanelaRegistrar>:
-    name: "register_screen"
-    BoxLayout:
-        size: root.width, root.height
-        orientation: "vertical"
-
-        padding: 10
-        spacing: 10
-
-        canvas.before:
-            Color:
-                rgba: (1,1,1,1)
-            Rectangle:
-                pos: self.pos
-                size: self.size
-
-        Label:
-            text: "Registrar-se"
-            font_size: "15pt"
-
-            pos_hint: {'center_x': 0.5}
-            size_hint: (None, None)
-            height: 25
-            width: 100
-
-        Image:
-            source: "Resources/Imgs/Logo_pequeno.png"
-
-        GridLayout:
-            cols: 2
-            spacing: 8
-
-            Label:
-                text: "Nome:"
-                font_size: "11pt"
-                pos_hint: {'center_x': 0.5}
-                width: 38
-                height: 30
-            TextInput:
-                id: user_name
-                multiline: False
-                font_size: "11pt"
-                pos_hint: {'center_y': 0.5}
-                size_hint: (None, None)
-                width: 260
-                height: 30
-                do_wrap: False
-                write_tab: False
-                on_text: root.validate_color()
-
-            Label:
-                text: "Email:"
-                font_size: "11pt"
-                pos_hint: {'center_x': 0.5}
-                width: 38
-                height: 30
-            TextInput:
-                id: email_register
-                multiline: False
-                font_size: "11pt"
-                pos_hint: {'center_y': 0.5}
-                size_hint: (None, None)
-                width: 260
-                height: 30
-                do_wrap: False
-                write_tab: False
-                on_text: root.validate_color()
-
-            Label:
-                text: "Senha:"
-                font_size: "11pt"
-                pos_hint: {'center_x': 0.5}
-                width: 38
-                height: 30
-            TextInput:
-                id: password_register
-                password: True
-                multiline: False
-                font_size: "11pt"
-                pos_hint: {'center_x': 0.5}
-                size_hint: (None, None)
-                width: 260
-                height: 30
-                do_wrap: False
-                write_tab: False
-                on_text: root.validate_color()
-
-            Label:
-                text: "Confirmar senha:"
-                font_size: "11pt"
-                pos_hint: {'center_x': 0.5}
-                size_hint: (None, None)
-                width: 120
-                height: 30
-            TextInput:
-                id: password_confirm_register
-                password: True
-                multiline: False
-                font_size: "11pt"
-                pos_hint: {'center_x': 0.5}
-                size_hint: (None, None)
-                width: 260
-                height: 30
-                do_wrap: False
-                write_tab: False
-                on_text: root.validate_color()
-
-        BoxLayout:
-            cols: 2
-            spacing: 8
-            size_hint: (None, None)
-            size: 70, 70
-            pos_hint: {"center_x": .5}
-
-            Button:
-                text: "Registrar conta"
-                pos_hint: {'center_x': .5}
-                size_hint: (None, None)
-                height: 25
-                width: 120
-                on_press: root.cadastrar()
-
-            Button:
-                text: "Voltar"
-                pos_hint: {'center_x': 0.5}
-                size_hint: (None, None)
-                height: 25
-                width: 90
-                on_release:
-                    app.root.current = "login_screen"
-                    root.manager.transition.direction = "down"
 
 <GridPrincipal@GridLayout>
     canvas.before:
@@ -503,10 +378,46 @@ WindowManager:
                         app.root.current = "config_screen"
 
         GridConfig:
-            cols: 4
+            cols: 1
             rows: 4
 
-            Label:
-                text: "Configurações"
+            spacing: 5
+            padding: 10
 
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: 30
+
+                Label:
+                    text: "Resolução da tela:"
+
+                Spinner:
+                    id: resolucao_config
+                    text: "1024, 600"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    size_hint_y: None
+                    height: 25
+                    on_text: root.change_resolution(self.text)
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: 30
+
+                Label:
+                    text: "Temas:"
+
+                Spinner:
+                    id: spinner_tema
+                    text: "Light"
+                    values: ["Dark"]
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    size_hint_y: None
+                    height: 25
+                    on_text: root.change_tema(self.text)
+
+            Label:
+                text: ""
+                
 
