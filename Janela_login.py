@@ -34,18 +34,20 @@ def center_window(size_x, size_y):
 # Dedinir outra tela
 class JanelaLogin(Screen):
     checar = True
+
     def btn_login(self):
         user_email = self.ids.email_input.text
         user_password = self.ids.password_input.text
+
+        if user_email == "1" and user_password == "123":
+            center_window(*tamanho_tela)
+            return True
 
         if "@" in user_email:
             self.ids.error_login.text = ""
             nome_user_email, domain_email = user_email.split("@")
             print(f"Nome do email: {nome_user_email}\nServidor: {domain_email}")
             print(f"Email: {user_email}\nSenha: {user_password}")
-            if nome_user_email == "1" and user_password == "123":
-                center_window(*tamanho_tela)
-                return True
         else:
             self.ids.password_input.background_color = (212/255, 25/255, 32/255, .6)
             self.ids.email_input.background_color = (212/255, 25/255, 32/255, .6)
@@ -60,6 +62,7 @@ class JanelaLogin(Screen):
 
     def on_pre_enter(self):
         center_window(420, 350)
+        Window.clearcolor = (1, 1, 1, 1)
 
     def remove_password_mask(self):
         if not self.checar:
@@ -70,8 +73,10 @@ class JanelaLogin(Screen):
             self.ids.eye_password_mask.source = "Resources\Imgs\ZoioAberto.png"
         self.ids.password_input.password = self.checar
 
-    def keep_login(self, ref=0):
-        if ref == 1:
+    def keep_login(self, radio_button):
+        if radio_button:
+            self.ids.check_keep_login.active = False
+        else:
             self.ids.check_keep_login.active = True
 
 
@@ -88,7 +93,9 @@ class JanelaReport(Screen):
 class JanelaConfig(Screen):
     def change_tema(self, tema):
         if tema == "Dark":
-            self.ids.spinner_tema.color = (0, 1, 0, 1)
+            Window.clearcolor = (0, 0, 0, 1)
+        if tema == "Light":
+            Window.clearcolor = (1, 1, 1, 1)
 
     def change_resolution(self, resolution):
         h, w = resolution.split(',')

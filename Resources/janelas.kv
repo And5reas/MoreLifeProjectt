@@ -14,18 +14,17 @@ WindowManager:
             width: 1.1
             rectangle: self.x, self.y, self.width, self.height
     background_normal: ''
-    background_color: (1, 1, 1, 1)
+    background_color: (1, 1, 1, .5)
 
 <Button>:
-    id: style_buttons
     canvas.before:
         Color:
-            rgba: (.5, .5, .5, 1)
+            rgba: (.5, .5, .5, .5)
         Line:
             width: 2
             rectangle: self.x, self.y, self.width, self.height
     background_normal: ''
-    background_color: (1, 1, 1, 1)
+    background_color: (1, 1, 1, .5)
 
 <ButtonSemStyle@Button>:
     canvas.before:
@@ -35,23 +34,12 @@ WindowManager:
             width: 2
             rectangle: self.x, self.y, self.width, self.height
     background_normal: ''
-    background_color: 0, 0, 0, 0
-
-<Spinner>:
-    canvas.before:
-        Color:
-            rgba: (.5, .5, .5, 1)
-        Line:
-            width: 2
-            rectangle: self.x, self.y, self.width, self.height
-    background_normal: ''
-    background_color: (1, 1, 1, 1)
-
+    background_color: (1, 1, 1, .5)
 
 <Label>:
     canvas.before:
         Color:
-            rgba: (1,1,1,1)
+            rgba: (1,1,1,.5)
         Rectangle:
             size: self.size
             pos: self.pos
@@ -73,13 +61,6 @@ WindowManager:
 
         padding: 10
         spacing: 5
-
-        canvas.before:
-            Color:
-                rgba: (1,1,1,1)
-            Rectangle:
-                pos: self.pos
-                size: self.size
 
         Label:
             text: "Login"
@@ -137,7 +118,6 @@ WindowManager:
                 on_text: root.validate_color()
 
             Label:
-                text: ""
                 # Label para pular uma coluna do grid
 
             BoxLayout
@@ -151,7 +131,7 @@ WindowManager:
                     size_hint: (None, None)
                     width: 155
                     height: 40
-                    on_ref_press: root.keep_login(1)
+                    on_ref_press: root.keep_login(check_keep_login.active)
 
                 CheckBox:
                     id: check_keep_login
@@ -159,17 +139,23 @@ WindowManager:
                     size_hint: (None, None)
                     width: 15
                     height: 15
-                    on_active: root.keep_login()
 
-                ButtonSemStyle:
-                    on_press: root.remove_password_mask()
-                    background_disabled_normal: str(False)
-                    Image:
-                        id: eye_password_mask
-                        y: self.parent.y + self.parent.height - 30
-                        x: self.parent.x + 110
+                
+                FloatLayout:
+                    ButtonSemStyle:
+                        size_hint: (None, None)
                         size: 30, 30
-                        source: "Resources\Imgs\ZoioFechado.png"
+                        y: 100
+                        x: 260
+                        pos_hint: {"right":0.9}
+                        on_press: root.remove_password_mask()
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y
+                            x: self.parent.x
+                            size: 30, 30
+                            source: "Resources\Imgs\ZoioFechado.png"
 
         Label:
             text: ""
@@ -231,13 +217,6 @@ WindowManager:
         padding: 40
         spacing: 40
 
-        canvas.before:
-            Color:
-                rgba: (1,1,1,1)
-            Rectangle:
-                pos: self.pos
-                size: self.size
-
         BoxLayout:
             orientation: "vertical"
 
@@ -263,13 +242,19 @@ WindowManager:
                         app.root.current = "report_screen"
 
                 Button:
-                    text: "Conta"
-
-                Button:
                     text: "Configurações"
                     on_release:
                         root.manager.transition = NoTransition()
                         app.root.current = "config_screen"
+
+                BoxLayout:
+                    orientation: "horizontal"
+
+                    Button:
+                        text: "Conta"
+
+                    Button:
+                        text: "Sair"
 
         GridPrincipal:
             cols: 4
@@ -287,13 +272,6 @@ WindowManager:
         padding: 40
         spacing: 40
 
-        canvas.before:
-            Color:
-                rgba: (1,1,1,1)
-            Rectangle:
-                pos: self.pos
-                size: self.size
-
         BoxLayout:
             orientation: "vertical"
 
@@ -309,20 +287,29 @@ WindowManager:
                 Button:
                     text: "Principal"
                     on_release:
+                        root.manager.transition = NoTransition()
                         app.root.current = "main_screen"
 
                 Button:
                     text: "Relatórios"
                     on_release:
+                        root.manager.transition = NoTransition()
                         app.root.current = "report_screen"
-
-                Button:
-                    text: "Conta"
 
                 Button:
                     text: "Configurações"
                     on_release:
+                        root.manager.transition = NoTransition()
                         app.root.current = "config_screen"
+
+                BoxLayout:
+                    orientation: "horizontal"
+
+                    Button:
+                        text: "Conta"
+
+                    Button:
+                        text: "Sair"
 
         GridReport:
             cols: 4
@@ -340,13 +327,6 @@ WindowManager:
         padding: 40
         spacing: 40
 
-        canvas.before:
-            Color:
-                rgba: (1,1,1,1)
-            Rectangle:
-                pos: self.pos
-                size: self.size
-
         BoxLayout:
             orientation: "vertical"
 
@@ -362,20 +342,29 @@ WindowManager:
                 Button:
                     text: "Principal"
                     on_release:
+                        root.manager.transition = NoTransition()
                         app.root.current = "main_screen"
 
                 Button:
                     text: "Relatórios"
                     on_release:
+                        root.manager.transition = NoTransition()
                         app.root.current = "report_screen"
-
-                Button:
-                    text: "Conta"
 
                 Button:
                     text: "Configurações"
                     on_release:
+                        root.manager.transition = NoTransition()
                         app.root.current = "config_screen"
+
+                BoxLayout:
+                    orientation: "horizontal"
+
+                    Button:
+                        text: "Conta"
+
+                    Button:
+                        text: "Sair"
 
         GridConfig:
             cols: 1
@@ -411,7 +400,7 @@ WindowManager:
                 Spinner:
                     id: spinner_tema
                     text: "Light"
-                    values: ["Dark"]
+                    values: ["Dark", "Light"]
                     pos_hint: {"center_x": .5, "center_y": .5}
                     size_hint_y: None
                     height: 25
