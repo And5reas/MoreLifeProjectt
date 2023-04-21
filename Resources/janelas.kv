@@ -19,7 +19,7 @@ WindowManager:
 <Button>:
     canvas.before:
         Color:
-            rgba: (.5, .5, .5, .5)
+            rgba: (.5, .5, .5, 1)
         Line:
             width: 2
             rectangle: self.x, self.y, self.width, self.height
@@ -65,7 +65,6 @@ WindowManager:
         Label:
             text: "Login"
             font_size: "15pt"
-
             pos_hint: {'center_x': 0.5}
             size_hint: (None, None)
             height: 25
@@ -81,7 +80,6 @@ WindowManager:
             Label:
                 text: "Email:"
                 font_size: "11pt"
-                pos_hint: {'center_y': 0.5}
                 size_hint: (None, None)
                 width: 38
                 height: 30
@@ -89,7 +87,6 @@ WindowManager:
                 id: email_input
                 multiline: False
                 font_size: "11pt"
-                pos_hint: {'center_y': 0.5}
                 size_hint: (None, None)
                 width: 326
                 height: 30
@@ -100,7 +97,6 @@ WindowManager:
             Label:
                 text: "Senha:"
                 font_size: "11pt"
-                pos_hint: {'center_y': 0.5}
                 size_hint: (None, None)
                 width: 38
                 height: 30
@@ -109,7 +105,6 @@ WindowManager:
                 password: True
                 multiline: False
                 font_size: "11pt"
-                pos_hint: {'center_y': 0.5}
                 size_hint: (None, None)
                 width: 326
                 height: 30
@@ -231,6 +226,7 @@ WindowManager:
 
                 Button:
                     text: "Principal"
+                    background_color: (51/255, 184/255, 18/255, .5)
                     on_release:
                         root.manager.transition = NoTransition()
                         app.root.current = "main_screen"
@@ -255,6 +251,7 @@ WindowManager:
 
                     Button:
                         text: "Sair"
+                        on_press: app.root.current = "login_screen"
 
         GridPrincipal:
             cols: 4
@@ -292,6 +289,7 @@ WindowManager:
 
                 Button:
                     text: "Relatórios"
+                    background_color: (51/255, 184/255, 18/255, .5)
                     on_release:
                         root.manager.transition = NoTransition()
                         app.root.current = "report_screen"
@@ -310,6 +308,7 @@ WindowManager:
 
                     Button:
                         text: "Sair"
+                        on_press: app.root.current = "login_screen"
 
         GridReport:
             cols: 4
@@ -353,6 +352,7 @@ WindowManager:
 
                 Button:
                     text: "Configurações"
+                    background_color: (51/255, 184/255, 18/255, .5)
                     on_release:
                         root.manager.transition = NoTransition()
                         app.root.current = "config_screen"
@@ -365,6 +365,7 @@ WindowManager:
 
                     Button:
                         text: "Sair"
+                        on_press: app.root.current = "login_screen"
 
         GridConfig:
             cols: 1
