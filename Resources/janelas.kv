@@ -26,6 +26,16 @@ WindowManager:
     background_normal: ''
     background_color: (1, 1, 1, .5)
 
+<Spinner>:
+    canvas.before:
+        Color:
+            rgba: (.6, .6, .6, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    background_normal: ''
+    background_color: (.6 ,.6 ,.6 ,1)
+
 <ButtonSemStyle@Button>:
     canvas.before:
         Color:

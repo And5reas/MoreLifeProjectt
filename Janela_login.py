@@ -1,5 +1,6 @@
 from kivy.config import Config
 Config.set('graphics', 'resizable', 0)
+Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
 from kivy.app import App
 from kivy.lang import Builder
@@ -98,8 +99,11 @@ class JanelaConfig(Screen):
             Window.clearcolor = (1, 1, 1, 1)
 
     def change_resolution(self, resolution):
-        h, w = resolution.split(',')
-        center_window(int(h), int(w))
+        if resolution == "FullScreen":
+            center_window(screen_x, screen_y)
+        else:
+            h, w = resolution.split(',')
+            center_window(int(h), int(w))
 
     def on_pre_enter(self):
         self.ids.resolucao_config.values = resolutions
@@ -113,7 +117,7 @@ kv = Builder.load_file('Resources/janelas.kv')  # "Chamar" o arquivo kivy
 # (Obs: Se tiver mais de uma janela é preciso declarar essa variável antes do windowManager)
 
 tamanho_tela = (1024, 600)
-resolutions = ['1920, 1080', '1680, 1050', '1600, 1024', '1600, 900', '1440, 900', '1366, 768', '1280, 1024',
+resolutions = ['FullScreen', '1920, 1080', '1680, 1050', '1600, 1024', '1600, 900', '1440, 900', '1366, 768', '1280, 1024',
                '1280, 960', '1280, 800', '1280, 768', '1280, 720', '1152, 864', '1024, 768', '1024, 720', '1024, 600',
                '800, 600']
 
