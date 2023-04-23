@@ -1,4 +1,5 @@
-import Load_program as LoadStuff
+import LoadProgramStuffs as LoadStuff
+import DataBaseMorelife as DBMorelife
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -19,7 +20,8 @@ class JanelaLogin(Screen):
         user_password = self.ids.password_input.text
 
         if user_email == "1" and user_password == "123":
-            Wi.center_window(1024, 600, Window, screen_x, screen_y)
+            saved_screen_size_w, saved_screen_size_h = LoadConfigs.load_main_screen_config()
+            Wi.center_window(saved_screen_size_w, saved_screen_size_h, Window, screen_x, screen_y)
             return True
 
         if "@" in user_email:
@@ -72,12 +74,8 @@ class JanelaReport(Screen):
 class JanelaConfig(Screen):
     @staticmethod
     def change_tema(tema):
-        if tema == "Dark":
-            Window.clearcolor = (0, 0, 0, 1)
-        elif tema == "Light":
-            Window.clearcolor = (1, 1, 1, 1)
-        elif tema == "Dark Blue":
-            Window.clearcolor = (0, 0, 70/255, 1)
+        LoadConfigs.load_config_color_change(tema)
+        DBConfig.save_config('Teme', tema)
 
     @staticmethod
     def change_resolution(resolution):
@@ -86,9 +84,15 @@ class JanelaConfig(Screen):
         else:
             h, w = resolution.split(',')
             Wi.center_window(int(h), int(w), Window, screen_x, screen_y)
+        DBConfig.save_config('Resolution', resolution)
+
+    def on_leave(self):
+        DBConfig.commit_and_close()
 
     def on_pre_enter(self):
-        self.ids.resolucao_config.values = LoadStuff.justfy_resolutions_on_screen_config(screen_x, screen_y)
+        self.ids.resolucao_config.values = LoadConfigs.justfy_resolutions_on_screen_config(screen_x, screen_y)
+        DBConfig.start_connection()
+        LoadConfigs.load_text_config(self.ids.resolucao_config, self.ids.spinner_tema)
 
 
 class WindowManager(ScreenManager):
@@ -106,3 +110,6 @@ Wi = LoadStuff.WindowInformation()
 screen_x, screen_y = Wi.get_window_size()
 kv = Builder.load_file('Resources/janelas.kv')  # "Chamar" o arquivo kivy
 # (Obs: Se tiver mais de uma janela é preciso declarar essa variável antes do windowManager)
+DBConfig = DBMorelife.ConfigDataBase()
+DBConfig.create_db()
+LoadConfigs = LoadStuff.LoadConfigStuffs(Window, DBConfig.load_config())
