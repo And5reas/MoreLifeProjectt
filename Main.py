@@ -1,3 +1,4 @@
 from Janela_login import MoreLife
 
-MoreLife().run()
+if __name__ == '__main__':
+    MoreLife().run()

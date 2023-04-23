@@ -1,38 +1,16 @@
+import Load_program as LoadStuff
+from kivy.app import App
+from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager, Screen
+# Isso precisa estar antes do "from kivy.core.window import Window" se não um sobrepõe o outro
 from kivy.config import Config
 Config.set('graphics', 'resizable', 0)
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
-from kivy.app import App
-from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
-import sys
-
-# Checar qual o tamanho do monitor do usuário
-if sys.platform == 'linux2':
-    import subprocess
-    output = subprocess.Popen(
-        'xrandr | grep "\*" | cut -d" " -f4',
-        shell=True,
-        stdout=subprocess.PIPE).communicate()[0]
-    screen_x = int(output.replace('\n', '').split('x')[0])
-    screen_y = int(output.replace('\n', '').split('x')[1])
-elif sys.platform == 'win32':
-    from win32api import GetSystemMetrics
-    screen_x = GetSystemMetrics(0)
-    screen_y = GetSystemMetrics(1)
-else:
-    # For mobile devices, use full screen
-    screen_x, screen_y = 800, 600  # return something
 
 
-def center_window(size_x, size_y):
-    Window.size = (size_x, size_y)
-    Window.left = (screen_x - size_x) / 2
-    Window.top = (screen_y - size_y) / 2
-
-
-# Dedinir outra tela
+# Dedinir janelas
 class JanelaLogin(Screen):
     checar = True
 
@@ -41,7 +19,7 @@ class JanelaLogin(Screen):
         user_password = self.ids.password_input.text
 
         if user_email == "1" and user_password == "123":
-            center_window(*tamanho_tela)
+            Wi.center_window(1024, 600, Window, screen_x, screen_y)
             return True
 
         if "@" in user_email:
@@ -62,16 +40,16 @@ class JanelaLogin(Screen):
             self.ids.email_input.background_color = (1, 1, 1, 1)
 
     def on_pre_enter(self):
-        center_window(420, 350)
+        Wi.center_window(420, 350, Window, screen_x, screen_y)
         Window.clearcolor = (1, 1, 1, 1)
 
     def remove_password_mask(self):
         if not self.checar:
             self.checar = True
-            self.ids.eye_password_mask.source = "Resources\Imgs\ZoioFechado.png"
+            self.ids.eye_password_mask.source = "Resources\\Imgs\\zoio_fechado.png"
         else:
             self.checar = False
-            self.ids.eye_password_mask.source = "Resources\Imgs\ZoioAberto.png"
+            self.ids.eye_password_mask.source = "Resources\\Imgs\\zoio_aberto.png"
         self.ids.password_input.password = self.checar
 
     def keep_login(self, radio_button):
@@ -92,50 +70,29 @@ class JanelaReport(Screen):
 
 
 class JanelaConfig(Screen):
-    def change_tema(self, tema):
+    @staticmethod
+    def change_tema(tema):
         if tema == "Dark":
             Window.clearcolor = (0, 0, 0, 1)
-        if tema == "Light":
+        elif tema == "Light":
             Window.clearcolor = (1, 1, 1, 1)
+        elif tema == "Dark Blue":
+            Window.clearcolor = (0, 0, 70/255, 1)
 
-    def change_resolution(self, resolution):
+    @staticmethod
+    def change_resolution(resolution):
         if resolution == "FullScreen":
-            center_window(screen_x, screen_y)
+            Wi.center_window(screen_x, screen_y, Window, screen_x, screen_y)
         else:
             h, w = resolution.split(',')
-            center_window(int(h), int(w))
+            Wi.center_window(int(h), int(w), Window, screen_x, screen_y)
 
     def on_pre_enter(self):
-        self.ids.resolucao_config.values = resolutions
+        self.ids.resolucao_config.values = LoadStuff.justfy_resolutions_on_screen_config(screen_x, screen_y)
 
 
 class WindowManager(ScreenManager):
     pass
-
-
-kv = Builder.load_file('Resources/janelas.kv')  # "Chamar" o arquivo kivy
-# (Obs: Se tiver mais de uma janela é preciso declarar essa variável antes do windowManager)
-
-tamanho_tela = (1024, 600)
-resolutions = ['FullScreen', '1920, 1440', '2538, 1080', '2436, 1125', '2520, 1080', '1920, 1400', '2048, 1280',
-               '2160, 1200', '2880, 900', '1800, 1440', '2400, 1080', '1856, 1392', '2340, 1080', '1920, 1280',
-               '1920, 1280', '1792, 1344', '2048, 1152', '1920, 1200', '1920, 1280', '1440, 1440', '1920, 1080',
-               '1600, 1280', '1600, 1200', '1776, 1000', '1680, 1050', '1600, 1024', '1440, 1080', '1440, 1024',
-               '1400, 1050', '1600, 900', '1440, 960', '1280, 1024', '1440, 900', '1080, 1200', '1600, 768',
-               '1280, 960', '1280, 854', '1366, 768', '1024, 1024', '1152, 900', '1280, 800', '1334, 750',
-               '1152, 864', '1280, 768', '1120, 832', '1280, 720', '1152, 768', '1152, 720', '1024, 800',
-               '1024, 768', '1138, 640', '1136, 640', '960, 720', '1024, 640', '1024, 600', '960, 640', '1024, 576',
-               '960, 544', '832, 624', '960, 540', '800, 600']
-verif_resu = 1
-while True:
-    try:
-        w, h = resolutions[verif_resu].split(', ')
-        if int(w) >= screen_x or int(h) >= screen_y:
-            resolutions.remove(resolutions[verif_resu])
-        else:
-            verif_resu += 1
-    except:
-        break
 
 
 class MoreLife(App):
@@ -144,5 +101,8 @@ class MoreLife(App):
         return kv
 
 
-if __name__ == '__main__':
-    MoreLife().run()
+# Declarando variáveis e objetos
+Wi = LoadStuff.WindowInformation()
+screen_x, screen_y = Wi.get_window_size()
+kv = Builder.load_file('Resources/janelas.kv')  # "Chamar" o arquivo kivy
+# (Obs: Se tiver mais de uma janela é preciso declarar essa variável antes do windowManager)
