@@ -44,10 +44,12 @@ class ConfigDataBase:
         self.cursor.execute('SELECT * FROM Config WHERE ID = 1')
         lista = self.cursor.fetchall()  # Retorna uma lista da config
         self.conn.close()
+        self.cursor = None
         return lista
 
     def commit_and_close(self):
         self.conn.commit()
+        self.cursor = None
         self.conn.close()
 
     def start_connection(self):

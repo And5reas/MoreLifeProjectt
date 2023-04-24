@@ -43,10 +43,6 @@ class LoadConfigStuffs:
         self.window_kivy_instance.clearcolor = colors_teme[self.config_list[0][2]]
         return int(screen_size_w), int(screen_size_h)
 
-    def load_text_config(self, resolucao_tela, tema):
-        resolucao_tela.text = self.config_list[0][1]
-        tema.text = self.config_list[0][2]
-
     def load_config_color_change(self, teme_name):
         self.window_kivy_instance.clearcolor = colors_teme[teme_name]
 

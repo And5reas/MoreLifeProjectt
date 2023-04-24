@@ -90,9 +90,8 @@ class JanelaConfig(Screen):
         DBConfig.commit_and_close()
 
     def on_pre_enter(self):
-        self.ids.resolucao_config.values = LoadConfigs.justfy_resolutions_on_screen_config(screen_x, screen_y)
+        self.ids.resolucao_config.values = resolutions
         DBConfig.start_connection()
-        LoadConfigs.load_text_config(self.ids.resolucao_config, self.ids.spinner_tema)
 
 
 class WindowManager(ScreenManager):
@@ -113,3 +112,4 @@ kv = Builder.load_file('Resources/janelas.kv')  # "Chamar" o arquivo kivy
 DBConfig = DBMorelife.ConfigDataBase()
 DBConfig.create_db()
 LoadConfigs = LoadStuff.LoadConfigStuffs(Window, DBConfig.load_config())
+resolutions = LoadConfigs.justfy_resolutions_on_screen_config(screen_x, screen_y)
