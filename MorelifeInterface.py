@@ -61,9 +61,20 @@ class JanelaLogin(Screen):
             self.ids.check_keep_login.active = True
 
 
+class JanelaAlertas(Screen):
+    pass
+
+
 class JanelaMain(Screen):
     def on_pre_enter(self):
         pass
+
+    def start_read_beats(self):
+        pass
+        '''from Comunicacao_arduino import Reading
+        a = Reading()
+        a.iniciar()
+        self.ids.Batimentos.text = a.ans'''
 
 
 class JanelaReport(Screen):
@@ -102,6 +113,9 @@ class MoreLife(App):
     def build(self):
         self.icon = "Resources/Imgs/icon.png"
         return kv
+
+    def on_stop(self):
+        pass
 
 
 # Declarando variáveis e objetos

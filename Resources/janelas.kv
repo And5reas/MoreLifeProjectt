@@ -3,6 +3,7 @@
 WindowManager:
     JanelaLogin:
     JanelaMain:
+    JanelaAlertas:
     JanelaReport:
     JanelaConfig:
 
@@ -224,14 +225,17 @@ WindowManager:
 
         BoxLayout:
             orientation: "vertical"
+            size_hint: None, 1
+            size: (150, 0)
 
             spacing: 40
 
             Image:
-                source: "Resources/Imgs/Logo.png"
+                source: "Resources/Imgs/Logo_pequeno.png"
+                size_hint: None, None
+                size: 150, 150
 
             BoxLayout:
-                size: (83, 210)
                 orientation: "vertical"
 
                 Button:
@@ -240,6 +244,12 @@ WindowManager:
                     on_release:
                         root.manager.transition = NoTransition()
                         app.root.current = "main_screen"
+
+                Button:
+                    text: "Alertas"
+                    on_release:
+                        root.manager.transition = NoTransition()
+                        app.root.current = "alert_screen"
 
                 Button:
                     text: "Relatórios"
@@ -267,8 +277,79 @@ WindowManager:
             cols: 4
             rows: 4
 
-            Label:
+            Button:
                 text: "Principal"
+                on_press: root.start_read_beats()
+
+            Label:
+                id: Batimentos
+                text: 'Printar'
+
+<JanelaAlertas>:
+    name: "alert_screen"
+    GridLayout:
+        size: root.width, root.height
+        cols: 2
+
+        padding: 40
+        spacing: 40
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: None, 1
+            size: (150, 0)
+
+            spacing: 40
+
+            Image:
+                source: "Resources/Imgs/Logo_pequeno.png"
+                size_hint: None, None
+                size: 150, 150
+
+            BoxLayout:
+                orientation: "vertical"
+
+                Button:
+                    text: "Principal"
+                    on_release:
+                        root.manager.transition = NoTransition()
+                        app.root.current = "main_screen"
+
+                Button:
+                    text: "Alertas"
+                    background_color: (51/255, 184/255, 18/255, .5)
+                    on_release:
+                        root.manager.transition = NoTransition()
+                        app.root.current = "alert_screen"
+
+                Button:
+                    text: "Relatórios"
+                    on_release:
+                        root.manager.transition = NoTransition()
+                        app.root.current = "report_screen"
+
+                Button:
+                    text: "Configurações"
+                    on_release:
+                        root.manager.transition = NoTransition()
+                        app.root.current = "config_screen"
+
+                BoxLayout:
+                    orientation: "horizontal"
+
+                    Button:
+                        text: "Conta"
+
+                    Button:
+                        text: "Sair"
+                        on_press: app.root.current = "login_screen"
+
+        GridReport:
+            cols: 4
+            rows: 4
+
+            Label:
+                text: "Relatórios"
 
 <JanelaReport>:
     name: "report_screen"
@@ -281,14 +362,17 @@ WindowManager:
 
         BoxLayout:
             orientation: "vertical"
+            size_hint: None, 1
+            size: (150, 0)
 
             spacing: 40
 
             Image:
-                source: "Resources/Imgs/Logo.png"
+                source: "Resources/Imgs/Logo_pequeno.png"
+                size_hint: None, None
+                size: 150, 150
 
             BoxLayout:
-                size: (83, 210)
                 orientation: "vertical"
 
                 Button:
@@ -296,6 +380,12 @@ WindowManager:
                     on_release:
                         root.manager.transition = NoTransition()
                         app.root.current = "main_screen"
+
+                Button:
+                    text: "Alertas"
+                    on_release:
+                        root.manager.transition = NoTransition()
+                        app.root.current = "alert_screen"
 
                 Button:
                     text: "Relatórios"
@@ -338,14 +428,17 @@ WindowManager:
 
         BoxLayout:
             orientation: "vertical"
+            size_hint: None, 1
+            size: (150, 0)
 
             spacing: 40
 
             Image:
-                source: "Resources/Imgs/Logo.png"
+                source: "Resources/Imgs/Logo_pequeno.png"
+                size_hint: None, None
+                size: 150, 150
 
             BoxLayout:
-                size: (83, 210)
                 orientation: "vertical"
 
                 Button:
@@ -353,6 +446,12 @@ WindowManager:
                     on_release:
                         root.manager.transition = NoTransition()
                         app.root.current = "main_screen"
+
+                Button:
+                    text: "Alertas"
+                    on_release:
+                        root.manager.transition = NoTransition()
+                        app.root.current = "alert_screen"
 
                 Button:
                     text: "Relatórios"
