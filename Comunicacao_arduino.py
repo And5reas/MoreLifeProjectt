@@ -1,51 +1,41 @@
 import serial.tools.list_ports
 import serial
 from threading import Thread
+from threading import Event
+
 
 class Reading:
-
     ports = serial.tools.list_ports.comports()
     serialArd = serial.Serial()
+    event = Event()
 
-    comList = []
+    funciona = False
+    option = None
+    ans = None
+    lbl_kivy = None
 
-    ans = ''
-
-    def iniciar(self):
+    def iniciar(self, lbl_kivy):
         a = Thread(target=self.connect)
+        self.lbl_kivy = lbl_kivy
         a.start()
 
     def connect(self):
         try:
-            for onePort in self.ports:
-                self.comList.append(str(onePort))
-                print(str(onePort))
-            print("\nEssas são as portas disponíveis em sua máquina para conectar no Arduino")
-
-        except:
-            print("Nenhuma porta para conectar no Arduino...")
-
-        # op = int(input("\nDigite o número da porta que está conectada ao Arduino(PODE SER VISTA NA IDE DO ARDUINO): "))
-        for x in range(-1, 20):
-            print(x)
-            try:
-                if(self.comList[x].startswith("COM" + str(x))):
-                    self.option = "COM" + str(x)
+            for port in self.ports:
+                port = str(port)
+                porta, name_porta = port.split(' - ')
+                name_porta = name_porta.split(' (')
+                if name_porta[0] != "Porta de comunicação":
+                    self.option = porta
                     print("Conectado a", self.option)
-                    self.readArd()
+                    self.funciona = True
+                    break
                 else:
-                    print("Não foi possível achar nenhuma porta COM...")
-                    try:
-                        for onePort in self.ports:
-                            self.comList.append(str(onePort))
-                            print(str(onePort))
-                        print("\nEssas são as portas disponíveis em sua máquina para conectar no Arduino")
-
-                    except:
-                        print("Nenhuma porta para conectar no Arduino...")
-            except:
-                pass
-
+                    print(f"Não foi possível achar nenhuma porta {porta}")  # Vai ser removido no futuro
+        except:
+            print("Nenhuma porta para conectar no Arduino...")  # Vai ser removido no futuro
+        if self.funciona:
+            self.readArd()
 
     def readArd(self):
         self.serialArd.close()
@@ -54,22 +44,10 @@ class Reading:
         self.serialArd.open()
         self.readingSerialArd()
 
-
     def readingSerialArd(self):
-        i = 0
-        while True:
+        while self.event.is_set():
             text = self.serialArd.readline()
             self.ans = str(text.decode('utf'))
             print(self.ans)
-            if (i > 10000):
-                op_cl = input("Deseja 'printar' mais resultados do sensor?(Y OU N): ")
-                while(op_cl.upper() == 'Y'):
-                    i = 0
-                    self.readArd()
-                if(op_cl.upper() == 'N'):
-                    return False
-                else:
-                    print('Digite uma opção válida...')
-                    return self.readArd()
-            i += 1
-
+            self.lbl_kivy.text = str(self.ans)
+        print("Conexão encerrada!")

@@ -70,11 +70,16 @@ class JanelaMain(Screen):
         pass
 
     def start_read_beats(self):
-        pass
-        '''from Comunicacao_arduino import Reading
-        a = Reading()
-        a.iniciar()
-        self.ids.Batimentos.text = a.ans'''
+        from Comunicacao_arduino import Reading
+        global ard_comunic_thread
+        ard_comunic_thread = Reading()
+        if self.ids.tgb_start_read_beats.state == 'down':
+            ard_comunic_thread.event.set()
+            ard_comunic_thread.iniciar(self.ids.Batimentos)
+            self.ids.tgb_start_read_beats.text = 'ON'
+        if self.ids.tgb_start_read_beats.state == 'normal':
+            ard_comunic_thread.event.clear()
+            self.ids.tgb_start_read_beats.text = 'OFF'
 
 
 class JanelaReport(Screen):
@@ -115,7 +120,7 @@ class MoreLife(App):
         return kv
 
     def on_stop(self):
-        pass
+        ard_comunic_thread.event.clear()
 
 
 # Declarando variáveis e objetos
@@ -127,3 +132,5 @@ DBConfig = DBMorelife.ConfigDataBase()
 DBConfig.create_db()
 LoadConfigs = LoadStuff.LoadConfigStuffs(Window, DBConfig.load_config())
 resolutions = LoadConfigs.justfy_resolutions_on_screen_config(screen_x, screen_y)
+
+ard_comunic_thread = None
