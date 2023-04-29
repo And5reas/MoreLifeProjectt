@@ -120,7 +120,8 @@ class MoreLife(App):
         return kv
 
     def on_stop(self):
-        ard_comunic_thread.event.clear()
+        if ard_comunic_thread is not None:
+            ard_comunic_thread.event.clear()
 
 
 # Declarando variáveis e objetos

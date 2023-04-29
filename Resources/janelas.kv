@@ -233,18 +233,39 @@ WindowManager:
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "main_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/casa.png"
 
                     Button:
                         text: "Alertas"
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "alert_screen"
+                            background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/exclamacao-de-alarme.png"
 
                     Button:
                         text: "Relatórios"
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "report_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/grafico-histograma.png"
 
                 BoxLayout:
                     orientation: "vertical"
@@ -253,19 +274,40 @@ WindowManager:
 
                     Button:
                         text: "Configurações"
-                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        text_size: self.width - 130/3, self.height - 130/3
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "config_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/controles-deslizantes-de-configuracoes.png"
 
                     Button:
                         text: "Conta"
-                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        text_size: self.width - 130/3, self.height - 130/3
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/do-utilizador.png"
 
                     Button:
                         text: "Sair"
-                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        text_size: self.width - 130/3, self.height - 130/3
                         on_press: app.root.current = "login_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/cartao-de-endereco.png"
 
         GridLayout:
             cols: 1
@@ -328,6 +370,7 @@ WindowManager:
                 
             BoxLayout:
                 orientation: "vertical"
+
                 
                 BoxLayout:
                     orientation: "vertical"
@@ -337,6 +380,13 @@ WindowManager:
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "main_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/casa.png"
 
                     Button:
                         text: "Alertas"
@@ -344,12 +394,26 @@ WindowManager:
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "alert_screen"
+                            background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/exclamacao-de-alarme.png"
 
                     Button:
                         text: "Relatórios"
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "report_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/grafico-histograma.png"
 
                 BoxLayout:
                     orientation: "vertical"
@@ -358,19 +422,40 @@ WindowManager:
 
                     Button:
                         text: "Configurações"
-                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        text_size: self.width - 130/3, self.height - 130/3
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "config_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/controles-deslizantes-de-configuracoes.png"
 
                     Button:
                         text: "Conta"
-                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        text_size: self.width - 130/3, self.height - 130/3
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/do-utilizador.png"
 
                     Button:
                         text: "Sair"
-                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        text_size: self.width - 130/3, self.height - 130/3
                         on_press: app.root.current = "login_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/cartao-de-endereco.png"
 
         GridLayout:
             cols: 4
@@ -419,12 +504,26 @@ WindowManager:
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "main_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/casa.png"
 
                     Button:
                         text: "Alertas"
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "alert_screen"
+                            background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/exclamacao-de-alarme.png"
 
                     Button:
                         text: "Relatórios"
@@ -432,6 +531,13 @@ WindowManager:
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "report_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/grafico-histograma.png"
 
                 BoxLayout:
                     orientation: "vertical"
@@ -440,19 +546,40 @@ WindowManager:
 
                     Button:
                         text: "Configurações"
-                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        text_size: self.width - 130/3, self.height - 130/3
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "config_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/controles-deslizantes-de-configuracoes.png"
 
                     Button:
                         text: "Conta"
-                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        text_size: self.width - 130/3, self.height - 130/3
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/do-utilizador.png"
 
                     Button:
                         text: "Sair"
-                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        text_size: self.width - 130/3, self.height - 130/3
                         on_press: app.root.current = "login_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/cartao-de-endereco.png"
 
         GridLayout:
             cols: 4
@@ -501,18 +628,39 @@ WindowManager:
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "main_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/casa.png"
 
                     Button:
                         text: "Alertas"
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "alert_screen"
+                            background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/exclamacao-de-alarme.png"
 
                     Button:
                         text: "Relatórios"
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "report_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/grafico-histograma.png"
 
                 BoxLayout:
                     orientation: "vertical"
@@ -522,19 +670,40 @@ WindowManager:
                     Button:
                         text: "Configurações"
                         background_color: (51/255, 184/255, 18/255, .5)
-                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        text_size: self.width - 130/3, self.height - 130/3
                         on_release:
                             root.manager.transition = NoTransition()
                             app.root.current = "config_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/controles-deslizantes-de-configuracoes.png"
 
                     Button:
                         text: "Conta"
-                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        text_size: self.width - 130/3, self.height - 130/3
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/do-utilizador.png"
 
                     Button:
                         text: "Sair"
-                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        text_size: self.width - 130/3, self.height - 130/3
                         on_press: app.root.current = "login_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/cartao-de-endereco.png"
 
         GridLayout:
             cols: 1
