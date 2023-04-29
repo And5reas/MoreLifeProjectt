@@ -76,10 +76,10 @@ class JanelaMain(Screen):
         if self.ids.tgb_start_read_beats.state == 'down':
             ard_comunic_thread.event.set()
             ard_comunic_thread.iniciar(self.ids.Batimentos)
-            self.ids.tgb_start_read_beats.text = 'ON'
+            self.ids.tgb_start_read_beats.text = 'Parar'
         if self.ids.tgb_start_read_beats.state == 'normal':
             ard_comunic_thread.event.clear()
-            self.ids.tgb_start_read_beats.text = 'OFF'
+            self.ids.tgb_start_read_beats.text = 'Começar'
 
 
 class JanelaReport(Screen):

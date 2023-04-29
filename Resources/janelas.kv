@@ -274,17 +274,32 @@ WindowManager:
                         on_press: app.root.current = "login_screen"
 
         GridPrincipal:
-            cols: 4
-            rows: 4
+            cols: 1
 
-            ToggleButton:
-                id: tgb_start_read_beats
-                text: "Principal"
-                on_press: root.start_read_beats()
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, .1
 
+                Label:
+                    text: "Deseja iniciar o MoreLife?"
+
+                ToggleButton:
+                    id: tgb_start_read_beats
+                    text: "Principal"
+                    on_press: root.start_read_beats()
+                    
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, .1
+
+                Label:
+                    text: "Batimentos por minuto:"
+
+                Label:
+                    id: Batimentos
+                    text: 'Printar'
             Label:
-                id: Batimentos
-                text: 'Printar'
+                text: "Coisas"
 
 <JanelaAlertas>:
     name: "alert_screen"
@@ -350,7 +365,7 @@ WindowManager:
             rows: 4
 
             Label:
-                text: "Relatórios"
+                text: "Alertas"
 
 <JanelaReport>:
     name: "report_screen"
