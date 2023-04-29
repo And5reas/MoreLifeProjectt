@@ -1,6 +1,6 @@
 from sys import platform
 
-colors_teme = {'Dark Blue': (0, 0, 70/255, 1), 'Light': (1, 1, 1, 1), 'Dark': (0, 0, 0, 1)}
+colors_teme = {'Dark Blue': (0, 0, 70/255, 1), 'Dark': (0, 0, 0, 1)}
 
 
 class WindowInformation:

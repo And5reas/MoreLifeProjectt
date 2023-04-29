@@ -29,7 +29,7 @@ class ConfigDataBase:
                               "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"
                               "Resolution TEXT,"
                               "Teme TEXT);")
-            self.conn.execute("INSERT INTO Config VALUES(NULL,?,?)", ("1024, 600", "Light"))
+            self.conn.execute("INSERT INTO Config VALUES(NULL,?,?)", ("1024, 600", "Dark"))
             self.conn.commit()
             self.conn.close()
 

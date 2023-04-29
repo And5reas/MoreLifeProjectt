@@ -48,6 +48,9 @@ WindowManager:
     background_color: (1, 1, 1, .5)
 
 <Label>:
+    color: (0,0,0,1)
+
+<LblLogin@Label>:
     canvas.before:
         Color:
             rgba: (1,1,1,.5)
@@ -73,7 +76,7 @@ WindowManager:
         padding: 10
         spacing: 5
 
-        Label:
+        LblLogin:
             text: "Login"
             font_size: "15pt"
             pos_hint: {'center_x': 0.5}
@@ -88,7 +91,7 @@ WindowManager:
             cols: 2
             spacing: 8
 
-            Label:
+            LblLogin:
                 text: "Email:"
                 font_size: "11pt"
                 size_hint: (None, None)
@@ -105,7 +108,7 @@ WindowManager:
                 write_tab: False
                 on_text: root.validate_color()
 
-            Label:
+            LblLogin:
                 text: "Senha:"
                 font_size: "11pt"
                 size_hint: (None, None)
@@ -123,14 +126,14 @@ WindowManager:
                 write_tab: False
                 on_text: root.validate_color()
 
-            Label:
+            LblLogin:
                 # Label para pular uma coluna do grid
 
             BoxLayout
                 orientation: "horizontal"
                 spacing: 10
 
-                Label:
+                LblLogin:
                     text: "[ref=Lembrar senha e email?]Lembrar senha e email?[/ref]"
                     pos_hint: {'center_y': 0.5}
                     markup: True
@@ -163,7 +166,7 @@ WindowManager:
                             size: 30, 30
                             source: "Resources\Imgs\zoio_fechado.png"
 
-        Label:
+        LblLogin:
             text: ""
             id: error_login
             font_size: "10pt"
@@ -189,30 +192,6 @@ WindowManager:
             height: 25
             width: 90
 
-<GridPrincipal@GridLayout>
-    canvas.before:
-        Color:
-            rgba: (.5, .5, .5, 1)
-        Line:
-            width: 2
-            rectangle: self.x, self.y, self.width, self.height
-
-<GridReport@GridLayout>
-    canvas.before:
-        Color:
-            rgba: (.5, .5, .5, 1)
-        Line:
-            width: 2
-            rectangle: self.x, self.y, self.width, self.height
-
-<GridConfig@GridLayout>
-    canvas.before:
-        Color:
-            rgba: (.5, .5, .5, 1)
-        Line:
-            width: 2
-            rectangle: self.x, self.y, self.width, self.height
-
 
 <JanelaMain>:
     name: "main_screen"
@@ -226,54 +205,69 @@ WindowManager:
         BoxLayout:
             orientation: "vertical"
             size_hint: None, 1
-            size: (150, 0)
+            size: 240, 0
+
+            canvas:
+                Color:
+                    rgba: 0.3, 0.2, 0.3, .5
+                Rectangle:
+                    pos: self.x - 40, self.y - 40
+                    size: self.width + 60, self.height + 80
 
             spacing: 40
 
             Image:
                 source: "Resources/Imgs/Logo_pequeno.png"
-                size_hint: None, None
-                size: 150, 150
-
+                size_hint: 1, .35
+                
             BoxLayout:
                 orientation: "vertical"
 
-                Button:
-                    text: "Principal"
-                    background_color: (51/255, 184/255, 18/255, .5)
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "main_screen"
+                
+                BoxLayout:
+                    orientation: "vertical"
+                    
+                    Button:
+                        text: "Principal"
+                        background_color: (51/255, 184/255, 18/255, .5)
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "main_screen"
 
-                Button:
-                    text: "Alertas"
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "alert_screen"
+                    Button:
+                        text: "Alertas"
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "alert_screen"
 
-                Button:
-                    text: "Relatórios"
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "report_screen"
-
-                Button:
-                    text: "Configurações"
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "config_screen"
+                    Button:
+                        text: "Relatórios"
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "report_screen"
 
                 BoxLayout:
-                    orientation: "horizontal"
+                    orientation: "vertical"
+                    size_hint: 1, None
+                    size: 0, 130
+
+                    Button:
+                        text: "Configurações"
+                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "config_screen"
 
                     Button:
                         text: "Conta"
+                        text_size: self.width - 130/3 - 20, self.height - 130/3
 
                     Button:
                         text: "Sair"
+                        text_size: self.width - 130/3 - 20, self.height - 130/3
                         on_press: app.root.current = "login_screen"
 
-        GridPrincipal:
+        GridLayout:
             cols: 1
 
             BoxLayout:
@@ -282,6 +276,7 @@ WindowManager:
 
                 Label:
                     text: "Deseja iniciar o MoreLife?"
+                    color: (1,1,1,1)
 
                 ToggleButton:
                     id: tgb_start_read_beats
@@ -294,12 +289,15 @@ WindowManager:
 
                 Label:
                     text: "Batimentos por minuto:"
+                    color: (1,1,1,1)
 
                 Label:
                     id: Batimentos
                     text: 'Printar'
+                    color: (1,1,1,1)
             Label:
                 text: "Coisas"
+                color: (1,1,1,1)
 
 <JanelaAlertas>:
     name: "alert_screen"
@@ -313,59 +311,74 @@ WindowManager:
         BoxLayout:
             orientation: "vertical"
             size_hint: None, 1
-            size: (150, 0)
+            size: 240, 0
+
+            canvas:
+                Color:
+                    rgba: 0.3, 0.2, 0.3, .5
+                Rectangle:
+                    pos: self.x - 40, self.y - 40
+                    size: self.width + 60, self.height + 80
 
             spacing: 40
 
             Image:
                 source: "Resources/Imgs/Logo_pequeno.png"
-                size_hint: None, None
-                size: 150, 150
-
+                size_hint: 1, .35
+                
             BoxLayout:
                 orientation: "vertical"
+                
+                BoxLayout:
+                    orientation: "vertical"
+                    
+                    Button:
+                        text: "Principal"
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "main_screen"
 
-                Button:
-                    text: "Principal"
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "main_screen"
+                    Button:
+                        text: "Alertas"
+                        background_color: (51/255, 184/255, 18/255, .5)
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "alert_screen"
 
-                Button:
-                    text: "Alertas"
-                    background_color: (51/255, 184/255, 18/255, .5)
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "alert_screen"
-
-                Button:
-                    text: "Relatórios"
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "report_screen"
-
-                Button:
-                    text: "Configurações"
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "config_screen"
+                    Button:
+                        text: "Relatórios"
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "report_screen"
 
                 BoxLayout:
-                    orientation: "horizontal"
+                    orientation: "vertical"
+                    size_hint: 1, None
+                    size: 0, 130
+
+                    Button:
+                        text: "Configurações"
+                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "config_screen"
 
                     Button:
                         text: "Conta"
+                        text_size: self.width - 130/3 - 20, self.height - 130/3
 
                     Button:
                         text: "Sair"
+                        text_size: self.width - 130/3 - 20, self.height - 130/3
                         on_press: app.root.current = "login_screen"
 
-        GridReport:
+        GridLayout:
             cols: 4
             rows: 4
 
             Label:
                 text: "Alertas"
+                color: (1,1,1,1)
 
 <JanelaReport>:
     name: "report_screen"
@@ -379,59 +392,75 @@ WindowManager:
         BoxLayout:
             orientation: "vertical"
             size_hint: None, 1
-            size: (150, 0)
+            size: 240, 0
+
+            canvas:
+                Color:
+                    rgba: 0.3, 0.2, 0.3, .5
+                Rectangle:
+                    pos: self.x - 40, self.y - 40
+                    size: self.width + 60, self.height + 80
 
             spacing: 40
 
             Image:
                 source: "Resources/Imgs/Logo_pequeno.png"
-                size_hint: None, None
-                size: 150, 150
-
+                size_hint: 1, .35
+                
             BoxLayout:
                 orientation: "vertical"
 
-                Button:
-                    text: "Principal"
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "main_screen"
+                
+                BoxLayout:
+                    orientation: "vertical"
+                    
+                    Button:
+                        text: "Principal"
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "main_screen"
 
-                Button:
-                    text: "Alertas"
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "alert_screen"
+                    Button:
+                        text: "Alertas"
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "alert_screen"
 
-                Button:
-                    text: "Relatórios"
-                    background_color: (51/255, 184/255, 18/255, .5)
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "report_screen"
-
-                Button:
-                    text: "Configurações"
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "config_screen"
+                    Button:
+                        text: "Relatórios"
+                        background_color: (51/255, 184/255, 18/255, .5)
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "report_screen"
 
                 BoxLayout:
-                    orientation: "horizontal"
+                    orientation: "vertical"
+                    size_hint: 1, None
+                    size: 0, 130
+
+                    Button:
+                        text: "Configurações"
+                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "config_screen"
 
                     Button:
                         text: "Conta"
+                        text_size: self.width - 130/3 - 20, self.height - 130/3
 
                     Button:
                         text: "Sair"
+                        text_size: self.width - 130/3 - 20, self.height - 130/3
                         on_press: app.root.current = "login_screen"
 
-        GridReport:
+        GridLayout:
             cols: 4
             rows: 4
 
             Label:
                 text: "Relatórios"
+                color: (1, 1, 1, 1)
 
 <JanelaConfig>:
     name: "config_screen"
@@ -445,54 +474,69 @@ WindowManager:
         BoxLayout:
             orientation: "vertical"
             size_hint: None, 1
-            size: (150, 0)
+            size: 240, 0
+
+            canvas:
+                Color:
+                    rgba: 0.3, 0.2, 0.3, .5
+                Rectangle:
+                    pos: self.x - 40, self.y - 40
+                    size: self.width + 60, self.height + 80
 
             spacing: 40
 
             Image:
                 source: "Resources/Imgs/Logo_pequeno.png"
-                size_hint: None, None
-                size: 150, 150
-
+                size_hint: 1, .35
+                
             BoxLayout:
                 orientation: "vertical"
 
-                Button:
-                    text: "Principal"
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "main_screen"
+                
+                BoxLayout:
+                    orientation: "vertical"
+                    
+                    Button:
+                        text: "Principal"
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "main_screen"
 
-                Button:
-                    text: "Alertas"
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "alert_screen"
+                    Button:
+                        text: "Alertas"
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "alert_screen"
 
-                Button:
-                    text: "Relatórios"
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "report_screen"
-
-                Button:
-                    text: "Configurações"
-                    background_color: (51/255, 184/255, 18/255, .5)
-                    on_release:
-                        root.manager.transition = NoTransition()
-                        app.root.current = "config_screen"
+                    Button:
+                        text: "Relatórios"
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "report_screen"
 
                 BoxLayout:
-                    orientation: "horizontal"
+                    orientation: "vertical"
+                    size_hint: 1, None
+                    size: 0, 130
+
+                    Button:
+                        text: "Configurações"
+                        background_color: (51/255, 184/255, 18/255, .5)
+                        text_size: self.width - 130/3 - 20, self.height - 130/3
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "config_screen"
 
                     Button:
                         text: "Conta"
+                        text_size: self.width - 130/3 - 20, self.height - 130/3
 
                     Button:
                         text: "Sair"
+                        text_size: self.width - 130/3 - 20, self.height - 130/3
                         on_press: app.root.current = "login_screen"
 
-        GridConfig:
+        GridLayout:
             cols: 1
 
             spacing: 5
@@ -519,7 +563,7 @@ WindowManager:
                 Spinner:
                     id: spinner_tema
                     text: "Temas"
-                    values: ["Dark", "Light", "Dark Blue"]
+                    values: ["Dark", "Dark Blue"]
                     pos_hint: {"center_x": .5, "center_y": .5}
                     size_hint_y: None
                     height: 25
