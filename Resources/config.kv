@@ -1,0 +1,148 @@
+<JanelaConfig>:
+    name: "config_screen"
+    GridLayout:
+        size: root.width, root.height
+        cols: 2
+
+        padding: 40
+        spacing: 40
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: None, 1
+            size: 240, 0
+
+            canvas:
+                Color:
+                    rgba: 0.3, 0.2, 0.3, .5
+                Rectangle:
+                    pos: self.x - 40, self.y - 40
+                    size: self.width + 60, self.height + 80
+
+            spacing: 40
+
+            Image:
+                source: "Resources/Imgs/Logo_pequeno.png"
+                size_hint: 1, .35
+                
+            BoxLayout:
+                orientation: "vertical"
+
+                
+                BoxLayout:
+                    orientation: "vertical"
+                    
+                    Button:
+                        text: "Principal"
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "main_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/casa.png"
+
+                    Button:
+                        text: "Alertas"
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "alert_screen"
+                            background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/exclamacao-de-alarme.png"
+
+                    Button:
+                        text: "Relatórios"
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "report_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) + 24
+                            x: self.parent.x + (self.width/2) + 24
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/grafico-histograma.png"
+
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint: 1, None
+                    size: 0, 130
+
+                    Button:
+                        text: "Configurações"
+                        background_color: (51/255, 184/255, 18/255, .5)
+                        text_size: self.width - 130/3, self.height - 130/3
+                        on_release:
+                            root.manager.transition = NoTransition()
+                            app.root.current = "config_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/controles-deslizantes-de-configuracoes.png"
+
+                    Button:
+                        text: "Conta"
+                        text_size: self.width - 130/3, self.height - 130/3
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/do-utilizador.png"
+
+                    Button:
+                        text: "Sair"
+                        text_size: self.width - 130/3, self.height - 130/3
+                        on_press: app.root.current = "login_screen"
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y + (self.height/2) - 10
+                            x: self.parent.x + (self.width/2) + 180
+                            size: 30, 30
+                            source: "Resources/Imgs/Icons/cartao-de-endereco.png"
+
+        GridLayout:
+            cols: 1
+
+            spacing: 5
+            padding: 10
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: 30
+
+                Spinner:
+                    id: resolucao_config
+                    text: "Resolução da tela"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    size_hint_y: None
+                    height: 25
+                    on_text: root.change_resolution(self.text)
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: 30
+
+                Spinner:
+                    id: spinner_tema
+                    text: "Temas"
+                    values: ["Dark", "Dark Blue"]
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    size_hint_y: None
+                    height: 25
+                    on_text: root.change_tema(self.text)
