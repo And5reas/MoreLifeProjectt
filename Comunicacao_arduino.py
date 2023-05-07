@@ -56,6 +56,5 @@ class Reading:
         while self.event.is_set():
             text = self.serialArd.readline()
             self.ans = str(text.decode('utf'))
-            print(self.ans)
             self.lbl_kivy.text = str(self.ans)
         print("Conexão encerrada!")
