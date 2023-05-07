@@ -28,8 +28,9 @@ class ConfigDataBase:
             self.conn.execute("CREATE TABLE IF NOT EXISTS Config"
                               "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"
                               "Resolution TEXT,"
-                              "Teme TEXT);")
-            self.conn.execute("INSERT INTO Config VALUES(NULL,?,?)", ("1024, 600", "Dark"))
+                              "Teme TEXT,"
+                              "IsLogged INTEGER);")
+            self.conn.execute("INSERT INTO Config VALUES(NULL,?,?,?)", ("1024, 600", "Dark", 0))
             self.conn.commit()
             self.conn.close()
 
@@ -37,7 +38,10 @@ class ConfigDataBase:
         if item_to_save == 'FullScreen':
             w, h = LoadProgramStuffs.WindowInformation.get_window_size()
             item_to_save = str(w) + ', ' + str(h)
-        self.conn.execute(f"UPDATE Config SET {colun} = '{item_to_save}' WHERE ID = 1")
+        if item_to_save is not str:
+            self.conn.execute(f"UPDATE Config SET {colun} = {item_to_save} WHERE ID = 1")
+        else:
+            self.conn.execute(f"UPDATE Config SET {colun} = '{item_to_save}' WHERE ID = 1")
 
     def load_config(self):
         self.start_connection()

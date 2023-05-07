@@ -32,10 +32,10 @@ class WindowInformation:
 
 
 class LoadConfigStuffs:
-
     def __init__(self, window_kivy_instance, config_list):
         self.window_kivy_instance = window_kivy_instance
         self.config_list = config_list
+        self.IsLogged = config_list[0][-1]
 
     def load_main_screen_config(self):
         screen_size = self.config_list[0][1]

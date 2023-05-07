@@ -10,6 +10,14 @@ Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
 from kivy.core.window import Window
 
+# Declarando variáveis e objetos
+Wi = LoadStuff.WindowInformation()
+screen_x, screen_y = Wi.get_window_size()
+DBConfig = DBMorelife.ConfigDataBase()
+DBConfig.create_db()
+LoadConfigs = LoadStuff.LoadConfigStuffs(Window, DBConfig.load_config())
+resolutions = LoadConfigs.justfy_resolutions_on_screen_config(screen_x, screen_y)
+
 
 # Dedinir janelas
 class JanelaLogin(Screen):
@@ -22,6 +30,10 @@ class JanelaLogin(Screen):
         if user_email == "1" and user_password == "123":
             saved_screen_size_w, saved_screen_size_h = LoadConfigs.load_main_screen_config()
             Wi.center_window(saved_screen_size_w, saved_screen_size_h, Window, screen_x, screen_y)
+
+            DBConfig.start_connection()
+            DBConfig.save_config('IsLogged', self.ids.check_keep_login.active)
+            DBConfig.commit_and_close()
             return True
 
         if "@" in user_email:
@@ -33,6 +45,7 @@ class JanelaLogin(Screen):
             self.ids.password_input.background_color = (212/255, 25/255, 32/255, .6)
             self.ids.email_input.background_color = (212/255, 25/255, 32/255, .6)
             self.ids.error_login.text = "Email e/ou senha inválido(s)"
+
         return False
 
     def validate_color(self):
@@ -60,15 +73,18 @@ class JanelaLogin(Screen):
         else:
             self.ids.check_keep_login.active = True
 
+    def on_kv_post(self, base_widget):
+        if LoadConfigs.IsLogged == 1:
+            saved_screen_size_w, saved_screen_size_h = LoadConfigs.load_main_screen_config()
+            Wi.center_window(saved_screen_size_w, saved_screen_size_h, Window, screen_x, screen_y)
+            self.manager.current = 'main_screen'
+
 
 class JanelaAlertas(Screen):
     pass
 
 
 class JanelaMain(Screen):
-    def on_pre_enter(self):
-        pass
-
     def start_read_beats(self):
         from Comunicacao_arduino import Reading
         global ard_comunic_thread
@@ -111,7 +127,11 @@ class JanelaConfig(Screen):
 
 
 class WindowManager(ScreenManager):
-    pass
+    def deslogar(self):
+        DBConfig.start_connection()
+        DBConfig.save_config('IsLogged', 0)
+        DBConfig.commit_and_close()
+        self.current = "login_screen"
 
 
 class MoreLife(App):
@@ -124,14 +144,7 @@ class MoreLife(App):
             ard_comunic_thread.event.clear()
 
 
-# Declarando variáveis e objetos
-Wi = LoadStuff.WindowInformation()
-screen_x, screen_y = Wi.get_window_size()
 kv = Builder.load_file('Resources/janelas.kv')  # "Chamar" o arquivo kivy
 # (Obs: Se tiver mais de uma janela é preciso declarar essa variável antes do windowManager)
-DBConfig = DBMorelife.ConfigDataBase()
-DBConfig.create_db()
-LoadConfigs = LoadStuff.LoadConfigStuffs(Window, DBConfig.load_config())
-resolutions = LoadConfigs.justfy_resolutions_on_screen_config(screen_x, screen_y)
 
 ard_comunic_thread = None
