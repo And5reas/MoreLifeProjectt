@@ -82,10 +82,12 @@
 
                 
                 FloatLayout:
-                    ButtonSemStyle:
+                    Button:
+                        background_normal: ''
+                        background_color: (1, 1, 1, 0)
                         size_hint: (None, None)
                         size: 30, 30
-                        y: 100
+                        y: 134
                         x: 260
                         pos_hint: {"right":0.9}
                         on_press: root.remove_password_mask()
@@ -114,6 +116,7 @@
             size_hint: (None, None)
             height: 25
             width: 90
+            background_color: .45,.45,.45,1
             on_release: if root.btn_login(): app.root.current = "main_screen"
 
         Button:
@@ -122,3 +125,4 @@
             size_hint: (None, None)
             height: 25
             width: 90
+            background_color: .45,.45,.45,1
