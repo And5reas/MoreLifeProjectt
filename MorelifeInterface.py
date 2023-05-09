@@ -81,7 +81,12 @@ class JanelaLogin(Screen):
 
 
 class JanelaAlertas(Screen):
-    pass
+    @staticmethod
+    def add_chrono(hrs1, min1, lbl_tempo):
+        import MoreLifeTimer as Timer
+        global timer
+        timer = Timer.MLTimer(hrs1, min1, lbl_tempo)
+        timer.iniciar_timer()
 
 
 class JanelaMain(Screen):
@@ -142,9 +147,12 @@ class MoreLife(App):
     def on_stop(self):
         if ard_comunic_thread is not None:
             ard_comunic_thread.event.clear()
+        if timer is not None:
+            timer.fecharThreadTimer()
 
 
 kv = Builder.load_file('Resources/janelas.kv')  # "Chamar" o arquivo kivy
 # (Obs: Se tiver mais de uma janela é preciso declarar essa variável antes do windowManager)
 
 ard_comunic_thread = None
+timer = None

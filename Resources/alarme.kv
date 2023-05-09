@@ -114,10 +114,87 @@
                             size: 30, 30
                             source: "Resources/Imgs/Icons/cartao-de-endereco.png"
 
-        GridLayout:
-            cols: 4
-            rows: 4
+        PageLayout:
+            id: paglayout
+            border: 11
 
-            Label:
-                text: "Alertas"
-                color: (1,1,1,1)
+            BoxLayout:
+                orientation: 'vertical'
+
+                canvas:
+                    Color:
+                        rgba: 1,0,1,1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+                Label:
+                    id: lbl_tempo
+                    text: "Nada"
+                    font_size: 25
+                    color: 1,1,1,1
+
+                BoxLayout:
+                    orientation: 'horizontal'
+
+                    Spinner:
+                        text: "Horas"
+                        font_size: 22
+                        id: hrs1
+                        size_hint: None, None
+                        values: ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"]
+                                    
+                    Spinner:
+                        text: "Minutos"
+                        font_size: 22
+                        id: min1
+                        size_hint: None, None
+                        values: ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+
+                    Button:
+                        id: btn1
+                        font_size: 22
+                        text: "+"
+                        size_hint: 1, None
+                        on_release: root.add_chrono(hrs1, min1, lbl_tempo)
+            
+            BoxLayout:
+                orientation: 'vertical'
+
+                canvas:
+                    Color:
+                        rgba: 0,0,1,1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+                Label:
+                    id: lbl_tempo2
+                    text: "Nada"
+                    font_size: 25
+                    color: 1,1,1,1
+
+                BoxLayout:
+                    orientation: 'horizontal'
+
+                    Spinner:
+                        text: "Horas"
+                        font_size: 22
+                        id: hrs2
+                        size_hint: None, None
+                        values: ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"]
+                                    
+                    Spinner:
+                        text: "Minutos"
+                        font_size: 22
+                        id: min2
+                        size_hint: None, None
+                        values: ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+
+                    Button:
+                        id: btn2
+                        font_size: 22
+                        background_color: 
+                        text: "+"
+                        size_hint: 1, None
+                        on_release: root.add_chrono(hrs1, min1, lbl_tempo)
