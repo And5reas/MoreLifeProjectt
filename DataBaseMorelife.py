@@ -38,7 +38,7 @@ class ConfigDataBase:
         if item_to_save == 'FullScreen':
             w, h = LoadProgramStuffs.WindowInformation.get_window_size()
             item_to_save = str(w) + ', ' + str(h)
-        if item_to_save is not str:
+        if item_to_save is 1 or item_to_save is 0:
             self.conn.execute(f"UPDATE Config SET {colun} = {item_to_save} WHERE ID = 1")
         else:
             self.conn.execute(f"UPDATE Config SET {colun} = '{item_to_save}' WHERE ID = 1")

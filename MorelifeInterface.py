@@ -1,5 +1,6 @@
 import LoadProgramStuffs as LoadStuff
 import DataBaseMorelife as DBMorelife
+
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -7,7 +8,6 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.config import Config
 Config.set('graphics', 'resizable', 0)
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
-
 from kivy.core.window import Window
 
 # Declarando variáveis e objetos

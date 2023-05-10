@@ -1,6 +1,8 @@
 from threading import Thread
 from threading import Event
 from time import sleep
+from winotify import Notification, audio
+
 
 class MLTimer:
     horas = 0
@@ -14,6 +16,11 @@ class MLTimer:
         self.lbl_timer = lbl_tempo
         self.segundos = self.horas*3600 + self.minutos*60
         self.event = Event()
+        self.notificacao = Notification(app_id="MoreLife",
+                                        title="MoreLife Alarme",
+                                        msg="Tempo expirado",
+                                        duration="short")
+        self.notificacao.set_audio(audio.LoopingAlarm, loop=True)
 
     def iniciar_timer(self):
         b = Thread(target=self.func_timer)
@@ -49,7 +56,7 @@ class MLTimer:
                 self.horas -= 1
                 self.minutos = int(59)
             self.lbl_timer.text = self.formatarTimer(z)
-            print(self.horas, self.minutos, z)
+        self.notificacao.show()
 
         
         
