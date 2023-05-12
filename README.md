@@ -1,5 +1,5 @@
 # MoreLifeProjectt
-Este projeto tem a finalidade de monitorar os batimentos cardiacos de jogadores do cenário competitivo, com um intuíto de gerar relatórios e proteger pessoas que já tiveram princípio de ataque cardiaco de ter, de fato, um. Também tem o intuito de controlar o tempo que o usuário fica jogando.
+Este projeto tem o intuito de ajudar pessoas que gostam de jogos competitivos, mas já tiveram problemas cardíacos, como princípio de infarto, a controlar o tempo que ficam no computador jogando, esses tipos de jogos que provocam o aumento dos batimentos cardiacos.
 
 ## Versão do python
 - 3.11.3
