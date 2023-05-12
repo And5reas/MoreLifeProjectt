@@ -11,7 +11,7 @@ Este projeto tem a finalidade de monitorar os batimentos cardiacos de jogadores 
 
 ## Como Instalar o Kivy
 
-Digite estes comandos no cmd, se o python na sua máquina não estiver em PATH execute diretamente na pasta do python ou adicione o python no PATH
+Digite estes comandos no terminal
 
     py -m pip install --upgrade pip wheel setuptools
 -------------------------------------------------------------------------------------
@@ -23,4 +23,4 @@ Digite estes comandos no cmd, se o python na sua máquina não estiver em PATH e
 -------------------------------------------------------------------------------------
     pip install kivy[base] kivy_examples --pre --extra-index-url https://kivy.org/downloads/simple/
 
-
+###### OBS: Se o python da sua máquina não estiver no PATH, você terá que adicionar o python no PATH ou executar esses comandos diretamente na pasta onde está o "python.exe"
