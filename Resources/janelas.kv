@@ -4,8 +4,10 @@
 #: include Resources/alarme.kv
 #: include Resources/report.kv
 #: include Resources/config.kv
+#: include Resources/BtnDaLateral.kv    
 
 WindowManager:
+    transition: NoTransition()
     JanelaLogin:
     JanelaMain:
     JanelaAlertas:
@@ -66,6 +68,3 @@ WindowManager:
             width: 1
             rectangle: self.x, self.y, self.width, self.height
             
-            
-                
-

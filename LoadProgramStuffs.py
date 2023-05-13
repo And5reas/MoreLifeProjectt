@@ -70,4 +70,3 @@ class LoadConfigStuffs:
                 break
 
         return resolutions
-

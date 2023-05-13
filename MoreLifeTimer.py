@@ -31,15 +31,15 @@ class MLTimer:
 
     def formatarTimer(self, z):
         formatacao_timer = ""
-        if (self.horas < 10):
+        if self.horas < 10:
             formatacao_timer += f"0{self.horas}:"
         else:
             formatacao_timer += f"{self.horas}:"
-        if (self.minutos < 10):
+        if self.minutos < 10:
             formatacao_timer += f"0{self.minutos}:"
         else:
             formatacao_timer += f"{self.minutos}:"
-        if (z%60 < 10):
+        if z % 60 < 10:
             formatacao_timer += f"0{z%60}"
         else:
             formatacao_timer += f"{z%60}"
@@ -48,11 +48,11 @@ class MLTimer:
     def func_timer(self):
         for z in range(self.segundos, -1, -1):
             sleep(1)
-            if (self.event.is_set()):
+            if self.event.is_set():
                 break
-            if(z%60 == 59):
+            if z % 60 == 59:
                 self.minutos -= 1
-            if(self.minutos == -1):
+            if self.minutos == -1:
                 self.horas -= 1
                 self.minutos = int(59)
             self.lbl_timer.text = self.formatarTimer(z)
