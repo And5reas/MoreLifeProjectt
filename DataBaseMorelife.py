@@ -15,7 +15,7 @@ elif platform == 'win32':
         os.mkdir(path_data_base)
 
 
-class ConfigDataBase:
+class MLDataBase:
     conn = None
     cursor = None
 
@@ -29,17 +29,22 @@ class ConfigDataBase:
                               "(ID INTEGER PRIMARY KEY AUTOINCREMENT,"
                               "Resolution TEXT,"
                               "Teme TEXT,"
-                              "IsLogged INTEGER);")
-            self.conn.execute("INSERT INTO Config VALUES(NULL,?,?,?)", ("1024, 600", "Dark", 0))
+                              "IsLogged INTEGER,"
+                              "Timer1 TEXT, Timer2 TEXT, Timer3 TEXT, Timer4 TEXT);")
+            self.conn.execute("INSERT INTO Config VALUES(NULL,?,?,?,?,?,?,?)", ("1024, 600", "Dark", 0, "00:00:00;NOME",
+                                                                                "00:00:00;NOME", "00:00:00;NOME",
+                                                                                "00:00:00;NOME"))
             self.conn.commit()
             self.conn.close()
 
-    def save_config(self, colun, item_to_save):
+    def save_db(self, colun, item_to_save):
         if item_to_save == 'FullScreen':
             w, h = LoadProgramStuffs.WindowInformation.get_window_size()
             item_to_save = str(w) + ', ' + str(h)
         if item_to_save is 1 or item_to_save is 0:
             self.conn.execute(f"UPDATE Config SET {colun} = {item_to_save} WHERE ID = 1")
+        elif ":" in item_to_save:
+            self.conn.execute(f"UPDATE Config SET {colun} = '{item_to_save}' WHERE ID = 1")
         else:
             self.conn.execute(f"UPDATE Config SET {colun} = '{item_to_save}' WHERE ID = 1")
 

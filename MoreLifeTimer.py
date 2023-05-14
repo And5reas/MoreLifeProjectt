@@ -7,14 +7,11 @@ from winotify import Notification, audio
 class MLTimer:
     horas = 0
     minutos = 0
+    segundos = 0
     lbl_timer = None
     event = None
     
-    def __init__(self, hrs1, min1, lbl_tempo):
-        self.horas = int(str(hrs1.text))
-        self.minutos = int(str(min1.text))
-        self.lbl_timer = lbl_tempo
-        self.segundos = self.horas*3600 + self.minutos*60
+    def __init__(self):
         self.event = Event()
         self.notificacao = Notification(app_id="MoreLife",
                                         title="MoreLife Alarme",
@@ -22,7 +19,11 @@ class MLTimer:
                                         duration="short")
         self.notificacao.set_audio(audio.LoopingAlarm, loop=True)
 
-    def iniciar_timer(self):
+    def iniciar_timer(self, hrs, minn, sec, lbl_tempo):
+        self.horas = int(hrs)
+        self.minutos = int(minn)
+        self.lbl_timer = lbl_tempo
+        self.segundos = self.horas * 3600 + self.minutos * 60 + int(sec)
         b = Thread(target=self.func_timer)
         b.start()
 
@@ -56,7 +57,9 @@ class MLTimer:
                 self.horas -= 1
                 self.minutos = int(59)
             self.lbl_timer.text = self.formatarTimer(z)
-        self.notificacao.show()
+        if self.lbl_timer.text == '00:00:00':
+            self.notificacao.show()
+        self.event.clear()
 
         
         

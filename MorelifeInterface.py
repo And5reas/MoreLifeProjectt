@@ -1,11 +1,15 @@
 import LoadProgramStuffs as LoadStuff
 import DataBaseMorelife as DBMorelife
+import MoreLifeTimer as Timer
 
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.popup import Popup
 # Isso precisa estar antes do "from kivy.core.window import Window" se não um sobrepõe o outro
 from kivy.config import Config
+
 Config.set('graphics', 'resizable', 0)
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 from kivy.core.window import Window
@@ -13,10 +17,14 @@ from kivy.core.window import Window
 # Declarando variáveis e objetos
 Wi = LoadStuff.WindowInformation()
 screen_x, screen_y = Wi.get_window_size()
-DBConfig = DBMorelife.ConfigDataBase()
-DBConfig.create_db()
-LoadConfigs = LoadStuff.LoadConfigStuffs(Window, DBConfig.load_config())
+DBML = DBMorelife.MLDataBase()
+DBML.create_db()
+LoadConfigs = LoadStuff.LoadConfigStuffs(Window, DBML.load_config())
 resolutions = LoadConfigs.justfy_resolutions_on_screen_config(screen_x, screen_y)
+temporizador1 = None
+temporizador2 = None
+temporizador3 = None
+temporizador4 = None
 
 
 # Dedinir janelas
@@ -31,9 +39,12 @@ class JanelaLogin(Screen):
             saved_screen_size_w, saved_screen_size_h = LoadConfigs.load_main_screen_config()
             Wi.center_window(saved_screen_size_w, saved_screen_size_h, Window, screen_x, screen_y)
 
-            DBConfig.start_connection()
-            DBConfig.save_config('IsLogged', self.ids.check_keep_login.active)
-            DBConfig.commit_and_close()
+            DBML.start_connection()
+            if self.ids.check_keep_login.active:
+                DBML.save_db('IsLogged', 1)
+            else:
+                DBML.save_db('IsLogged', 0)
+            DBML.commit_and_close()
             return True
 
         if "@" in user_email:
@@ -42,8 +53,8 @@ class JanelaLogin(Screen):
             print(f"Nome do email: {nome_user_email}\nServidor: {domain_email}")
             print(f"Email: {user_email}\nSenha: {user_password}")
         else:
-            self.ids.password_input.background_color = (212/255, 25/255, 32/255, .6)
-            self.ids.email_input.background_color = (212/255, 25/255, 32/255, .6)
+            self.ids.password_input.background_color = (212 / 255, 25 / 255, 32 / 255, .6)
+            self.ids.email_input.background_color = (212 / 255, 25 / 255, 32 / 255, .6)
             self.ids.error_login.text = "Email e/ou senha inválido(s)"
 
         return False
@@ -80,15 +91,6 @@ class JanelaLogin(Screen):
             self.manager.current = 'main_screen'
 
 
-class JanelaAlertas(Screen):
-    @staticmethod
-    def add_chrono(hrs1, min1, lbl_tempo):
-        import MoreLifeTimer as Timer
-        global timer
-        timer = Timer.MLTimer(hrs1, min1, lbl_tempo)
-        timer.iniciar_timer()
-
-
 class JanelaMain(Screen):
     def start_read_beats(self):
         from Comunicacao_arduino import Reading
@@ -103,6 +105,110 @@ class JanelaMain(Screen):
             self.ids.tgb_start_read_beats.text = 'Começar'
 
 
+class POPUP(Popup):
+    lbl_nome_timer = None
+    lbl_timer = None
+    class_timer_name = None
+
+    def validar_timer(self):
+        validar = [self.ids.Spn_hrs.text, self.ids.Spn_min.text, self.ids.Spn_sec.text]
+        oq_validar = ["Horas", "Minutos", "Segundos"]
+        j = 0
+        r = []
+        for i in validar:
+            if i == oq_validar[j]:
+                r.append('00')
+            else:
+                r.append(i)
+            j += 1
+
+        nome = self.ids.TxtInp_mudarNome.text
+        if nome == "NOME" or nome == "":
+            r.append("------------")
+        else:
+            r.append(nome)
+        return r
+
+    def extanciar_layout(self, lbl_nome_timer, lbl_timer, class_timer):
+        self.lbl_timer = lbl_timer
+        self.lbl_nome_timer = lbl_nome_timer
+        self.class_timer_name = class_timer.name
+
+    def modificar(self):
+        horas, minutos, segundos, nome = self.validar_timer()
+        DBML.start_connection()
+        DBML.save_db(self.class_timer_name, f"{horas}:{minutos}:{segundos};{nome}")
+        DBML.commit_and_close()
+        LoadConfigs.update_dados(DBML.load_config())
+        if self.class_timer_name == "Timer1":
+            self.lbl_timer.text, self.lbl_nome_timer.text = LoadConfigs.timers[0].split(';')
+        if self.class_timer_name == "Timer2":
+            self.lbl_timer.text, self.lbl_nome_timer.text = LoadConfigs.timers[1].split(';')
+        if self.class_timer_name == "Timer3":
+            self.lbl_timer.text, self.lbl_nome_timer.text = LoadConfigs.timers[2].split(';')
+        if self.class_timer_name == "Timer4":
+            self.lbl_timer.text, self.lbl_nome_timer.text = LoadConfigs.timers[3].split(';')
+        self.dismiss()
+
+
+class TIMER(BoxLayout):
+    checar = True
+
+    def on_kv_post(self, base_widget):
+        if self.name == "Timer1":
+            self.ids.lbl_timer_timer.text, self.ids.lbl_nome_timer.text = LoadConfigs.timers[0].split(';')
+        if self.name == "Timer2":
+            self.ids.lbl_timer_timer.text, self.ids.lbl_nome_timer.text = LoadConfigs.timers[1].split(';')
+        if self.name == "Timer3":
+            self.ids.lbl_timer_timer.text, self.ids.lbl_nome_timer.text = LoadConfigs.timers[2].split(';')
+        if self.name == "Timer4":
+            self.ids.lbl_timer_timer.text, self.ids.lbl_nome_timer.text = LoadConfigs.timers[3].split(';')
+
+    def add_chrono(self, lbl_tempo):
+        hrs, minn, sec = lbl_tempo.text.split(':')
+        if not self.checar:
+            if self.name == "Timer1":
+                temporizador1.iniciar_timer(hrs, minn, sec, lbl_tempo)
+            if self.name == "Timer2":
+                temporizador2.iniciar_timer(hrs, minn, sec, lbl_tempo)
+            if self.name == "Timer3":
+                temporizador3.iniciar_timer(hrs, minn, sec, lbl_tempo)
+            if self.name == "Timer4":
+                temporizador4.iniciar_timer(hrs, minn, sec, lbl_tempo)
+        else:
+            if self.name == "Timer1":
+                temporizador1.fecharThreadTimer()
+            if self.name == "Timer2":
+                temporizador2.fecharThreadTimer()
+            if self.name == "Timer3":
+                temporizador3.fecharThreadTimer()
+            if self.name == "Timer4":
+                temporizador4.fecharThreadTimer()
+
+    def play_pause(self):
+        if self.checar:
+            self.ids['imgPlay'].source = "Resources\\Imgs\\Pause.png"
+            self.checar = False
+        else:
+            self.ids['imgPlay'].source = "Resources\\Imgs\\Play.png"
+            self.checar = True
+
+    def editar(self, class_timer):
+        popup = POPUP()
+        popup.extanciar_layout(self.ids.lbl_nome_timer, self.ids.lbl_timer_timer, class_timer)
+        popup.open()
+
+
+class JanelaAlertas(Screen):
+    def __init__(self, **kw):
+        global temporizador1, temporizador2, temporizador3, temporizador4
+        temporizador1 = Timer.MLTimer()
+        temporizador2 = Timer.MLTimer()
+        temporizador3 = Timer.MLTimer()
+        temporizador4 = Timer.MLTimer()
+        super().__init__(**kw)
+
+
 class JanelaReport(Screen):
     def on_pre_enter(self):
         pass
@@ -112,7 +218,7 @@ class JanelaConfig(Screen):
     @staticmethod
     def change_tema(tema):
         LoadConfigs.load_config_color_change(tema)
-        DBConfig.save_config('Teme', tema)
+        DBML.save_db('Teme', tema)
 
     @staticmethod
     def change_resolution(resolution):
@@ -121,21 +227,21 @@ class JanelaConfig(Screen):
         else:
             h, w = resolution.split(',')
             Wi.center_window(int(h), int(w), Window, screen_x, screen_y)
-        DBConfig.save_config('Resolution', resolution)
+        DBML.save_db('Resolution', resolution)
 
     def on_leave(self):
-        DBConfig.commit_and_close()
+        DBML.commit_and_close()
 
     def on_pre_enter(self):
         self.ids.resolucao_config.values = resolutions
-        DBConfig.start_connection()
+        DBML.start_connection()
 
 
 class WindowManager(ScreenManager):
     def deslogar(self):
-        DBConfig.start_connection()
-        DBConfig.save_config('IsLogged', 0)
-        DBConfig.commit_and_close()
+        DBML.start_connection()
+        DBML.save_db('IsLogged', 0)
+        DBML.commit_and_close()
         self.current = "login_screen"
 
 
@@ -147,8 +253,10 @@ class MoreLife(App):
     def on_stop(self):
         if ard_comunic_thread is not None:
             ard_comunic_thread.event.clear()
-        if timer is not None:
-            timer.fecharThreadTimer()
+        temp_list = [temporizador1, temporizador2, temporizador3, temporizador4]
+        for i in temp_list:
+            if i is not None:
+                i.fecharThreadTimer()
 
 
 kv = Builder.load_file('Resources/janelas.kv')  # "Chamar" o arquivo kivy

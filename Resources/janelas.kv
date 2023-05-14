@@ -8,11 +8,17 @@
 
 WindowManager:
     transition: NoTransition()
+    
     JanelaLogin:
+        
     JanelaMain:
+        
     JanelaAlertas:
+        
     JanelaReport:
+        
     JanelaConfig:
+        
 
 <TextInput>:
     canvas.before:
@@ -67,4 +73,24 @@ WindowManager:
         Line:
             width: 1
             rectangle: self.x, self.y, self.width, self.height
+
+<RoundedButton@Button>:
+    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+    canvas.before:
+        Color:
+            rgba: (61/255, 1, 168/255, .7) if self.state=='normal' else (197/255, 61/255, 1, .4)  # visual feedback of press
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [100,]
+
+<RoundedButtonEdit@Button>:
+    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+    canvas.before:
+        Color:
+            rgba: (0, 0, 0, 0) if self.state=='normal' else (197/255, 61/255, 1, .4)  # visual feedback of press
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10,]
             
