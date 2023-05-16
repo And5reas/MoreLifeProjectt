@@ -10,6 +10,7 @@ class MLTimer:
     segundos = 0
     lbl_timer = None
     event = None
+    default_timer = None
     
     def __init__(self):
         self.event = Event()
@@ -17,12 +18,14 @@ class MLTimer:
                                         title="MoreLife Alarme",
                                         msg="Tempo expirado",
                                         duration="short")
+        self.notificacao.add_actions(label="Ok")
         self.notificacao.set_audio(audio.LoopingAlarm, loop=True)
 
     def iniciar_timer(self, hrs, minn, sec, lbl_tempo):
         self.horas = int(hrs)
         self.minutos = int(minn)
         self.lbl_timer = lbl_tempo
+        self.default_timer = lbl_tempo.text
         self.segundos = self.horas * 3600 + self.minutos * 60 + int(sec)
         b = Thread(target=self.func_timer)
         b.start()
@@ -47,6 +50,7 @@ class MLTimer:
         return formatacao_timer
 
     def func_timer(self):
+        self.event.clear()
         for z in range(self.segundos, -1, -1):
             sleep(1)
             if self.event.is_set():
@@ -59,6 +63,8 @@ class MLTimer:
             self.lbl_timer.text = self.formatarTimer(z)
         if self.lbl_timer.text == '00:00:00':
             self.notificacao.show()
+            sleep(1)
+            self.lbl_timer.text = self.default_timer
         self.event.clear()
 
         

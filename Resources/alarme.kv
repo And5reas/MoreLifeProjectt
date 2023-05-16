@@ -89,8 +89,7 @@
             size_hint: None, None
             size: 70, 70
             on_release:
-                root.play_pause()
-                root.add_chrono(lbl_timer_timer)
+                root.play_pause(lbl_timer_timer)
             Image:
                 id: imgPlay
                 y: self.parent.y
@@ -100,6 +99,8 @@
         RoundedButton:
             size_hint: None, None
             size: 70, 70
+            on_release:
+                root.resetar()
             Image:
                 y: self.parent.y
                 x: self.parent.x

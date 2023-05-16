@@ -29,15 +29,12 @@ class Reading:
                 port = str(port)
                 porta, name_porta = port.split(' - ')
                 name_porta = name_porta.split(' (')
-                if name_porta[0] != "Porta de comunicação":
+                if name_porta[0] == "Arduino Uno":
                     self.option = porta
-                    print("Conectado a", self.option)
                     self.funciona = True
                     break
-                else:
-                    print(f"Não foi possível achar nenhuma porta {porta}")  # Vai ser removido no futuro
         except:
-            print("Nenhuma porta para conectar no Arduino...")  # Vai ser removido no futuro
+            pass
         if self.funciona:
             self.readArd()
         else:
@@ -57,4 +54,3 @@ class Reading:
             text = self.serialArd.readline()
             self.ans = str(text.decode('utf'))
             self.lbl_kivy.text = str(self.ans)
-        print("Conexão encerrada!")

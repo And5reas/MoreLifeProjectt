@@ -17,8 +17,10 @@ class WindowInformation:
             screen_y = int(output.replace('\n', '').split('x')[1])
         elif platform == 'win32':
             from win32api import GetSystemMetrics
+            import ctypes
             screen_x = GetSystemMetrics(0)
             screen_y = GetSystemMetrics(1)
+            ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
         else:
             # For mobile devices, use full screen
             screen_x, screen_y = 800, 600  # return something

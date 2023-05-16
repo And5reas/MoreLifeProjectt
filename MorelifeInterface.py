@@ -21,10 +21,6 @@ DBML = DBMorelife.MLDataBase()
 DBML.create_db()
 LoadConfigs = LoadStuff.LoadConfigStuffs(Window, DBML.load_config())
 resolutions = LoadConfigs.justfy_resolutions_on_screen_config(screen_x, screen_y)
-temporizador1 = None
-temporizador2 = None
-temporizador3 = None
-temporizador4 = None
 
 
 # Dedinir janelas
@@ -152,61 +148,78 @@ class POPUP(Popup):
 
 
 class TIMER(BoxLayout):
-    checar = True
+    checar = False
 
-    def on_kv_post(self, base_widget):
-        if self.name == "Timer1":
+    def set_img_pause(self):
+        self.ids['imgPlay'].source = "Resources\\Imgs\\Pause.png"
+        self.checar = True
+
+    def set_img_start(self):
+        self.ids['imgPlay'].source = "Resources\\Imgs\\Play.png"
+        self.checar = False
+
+    def load_timer(self, name):
+        if name == "Timer1":
             self.ids.lbl_timer_timer.text, self.ids.lbl_nome_timer.text = LoadConfigs.timers[0].split(';')
-        if self.name == "Timer2":
+        elif name == "Timer2":
             self.ids.lbl_timer_timer.text, self.ids.lbl_nome_timer.text = LoadConfigs.timers[1].split(';')
-        if self.name == "Timer3":
+        elif name == "Timer3":
             self.ids.lbl_timer_timer.text, self.ids.lbl_nome_timer.text = LoadConfigs.timers[2].split(';')
-        if self.name == "Timer4":
+        elif name == "Timer4":
             self.ids.lbl_timer_timer.text, self.ids.lbl_nome_timer.text = LoadConfigs.timers[3].split(';')
 
-    def add_chrono(self, lbl_tempo):
-        hrs, minn, sec = lbl_tempo.text.split(':')
-        if not self.checar:
-            if self.name == "Timer1":
-                temporizador1.iniciar_timer(hrs, minn, sec, lbl_tempo)
-            if self.name == "Timer2":
-                temporizador2.iniciar_timer(hrs, minn, sec, lbl_tempo)
-            if self.name == "Timer3":
-                temporizador3.iniciar_timer(hrs, minn, sec, lbl_tempo)
-            if self.name == "Timer4":
-                temporizador4.iniciar_timer(hrs, minn, sec, lbl_tempo)
-        else:
-            if self.name == "Timer1":
-                temporizador1.fecharThreadTimer()
-            if self.name == "Timer2":
-                temporizador2.fecharThreadTimer()
-            if self.name == "Timer3":
-                temporizador3.fecharThreadTimer()
-            if self.name == "Timer4":
-                temporizador4.fecharThreadTimer()
+    def on_kv_post(self, base_widget):
+        self.load_timer(self.name)
 
-    def play_pause(self):
-        if self.checar:
-            self.ids['imgPlay'].source = "Resources\\Imgs\\Pause.png"
-            self.checar = False
+    @staticmethod
+    def kill_chrono(name):
+        if name == "Timer1":
+            temporizador1.fecharThreadTimer()
+        elif name == "Timer2":
+            temporizador2.fecharThreadTimer()
+        elif name == "Timer3":
+            temporizador3.fecharThreadTimer()
+        elif name == "Timer4":
+            temporizador4.fecharThreadTimer()
+
+    @staticmethod
+    def add_chrono(lbl_tempo, name):
+        hrs, minn, sec = lbl_tempo.text.split(':')
+        if name == "Timer1":
+            temporizador1.iniciar_timer(hrs, minn, sec, lbl_tempo)
+        elif name == "Timer2":
+            temporizador2.iniciar_timer(hrs, minn, sec, lbl_tempo)
+        elif name == "Timer3":
+            temporizador3.iniciar_timer(hrs, minn, sec, lbl_tempo)
+        elif name == "Timer4":
+            temporizador4.iniciar_timer(hrs, minn, sec, lbl_tempo)
+
+    def play_pause(self, lbl_tempo):
+        if not self.checar:
+            self.set_img_pause()
+            self.add_chrono(lbl_tempo, self.name)
         else:
-            self.ids['imgPlay'].source = "Resources\\Imgs\\Play.png"
-            self.checar = True
+            self.set_img_start()
+            self.kill_chrono(self.name)
 
     def editar(self, class_timer):
         popup = POPUP()
         popup.extanciar_layout(self.ids.lbl_nome_timer, self.ids.lbl_timer_timer, class_timer)
         popup.open()
 
+    def resetar(self):
+        self.set_img_start()
+        self.load_timer(self.name)
+        self.kill_chrono(self.name)
+
 
 class JanelaAlertas(Screen):
-    def __init__(self, **kw):
+    def on_enter(self):
         global temporizador1, temporizador2, temporizador3, temporizador4
         temporizador1 = Timer.MLTimer()
         temporizador2 = Timer.MLTimer()
         temporizador3 = Timer.MLTimer()
         temporizador4 = Timer.MLTimer()
-        super().__init__(**kw)
 
 
 class JanelaReport(Screen):
@@ -263,4 +276,7 @@ kv = Builder.load_file('Resources/janelas.kv')  # "Chamar" o arquivo kivy
 # (Obs: Se tiver mais de uma janela é preciso declarar essa variável antes do windowManager)
 
 ard_comunic_thread = None
-timer = None
+temporizador1 = None
+temporizador2 = None
+temporizador3 = None
+temporizador4 = None
