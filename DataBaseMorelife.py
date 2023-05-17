@@ -2,8 +2,6 @@ import sqlite3
 import os
 from sys import platform
 
-import LoadProgramStuffs
-
 # Fazer uma verificação rápida se existe o directório do programa
 if platform == 'linux2':
     path_data_base = os.path.expanduser('~') + '\\MoreLife'
