@@ -9,8 +9,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 # Isso precisa estar antes do "from kivy.core.window import Window" se não um sobrepõe o outro
 from kivy.config import Config
-Config.set('graphics', 'resizable', 0)
-Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
+Config.read("Resources/config.ini")
 from kivy.core.window import Window
 
 # Declarando variáveis e objetos
@@ -19,7 +18,6 @@ screen_x, screen_y = Wi.get_window_size()
 DBML = DBMorelife.MLDataBase()
 DBML.create_db()
 LoadConfigs = LoadStuff.LoadConfigStuffs(Window, DBML.load_config())
-resolutions = LoadConfigs.justfy_resolutions_on_screen_config(screen_x, screen_y)
 
 
 # Dedinir janelas
@@ -31,9 +29,6 @@ class JanelaLogin(Screen):
         user_password = self.ids.password_input.text
 
         if user_email == "1" and user_password == "123":
-            saved_screen_size_w, saved_screen_size_h = LoadConfigs.load_main_screen_config()
-            Wi.center_window(saved_screen_size_w, saved_screen_size_h, Window, screen_x, screen_y)
-
             DBML.start_connection()
             if self.ids.check_keep_login.active:
                 DBML.save_db('IsLogged', 1)
@@ -61,8 +56,9 @@ class JanelaLogin(Screen):
             self.ids.email_input.background_color = (1, 1, 1, 1)
 
     def on_pre_enter(self):
-        Wi.center_window(420, 350, Window, screen_x, screen_y)
-        Window.clearcolor = (1, 1, 1, 1)
+        saved_screen_size_w, saved_screen_size_h = LoadConfigs.load_main_screen_config()
+        Wi.center_window(saved_screen_size_w, saved_screen_size_h, Window, screen_x, screen_y)
+        LoadConfigs.load_config_color_change("Dark")
 
     def remove_password_mask(self):
         if not self.checar:
@@ -240,7 +236,6 @@ class JanelaConfig(Screen):
         DBML.commit_and_close()
 
     def on_pre_enter(self):
-        self.ids.resolucao_config.values = resolutions
         DBML.start_connection()
 
 

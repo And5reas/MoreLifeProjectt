@@ -1,11 +1,26 @@
 <JanelaLogin>:
     name: "login_screen"
     BoxLayout:
-        size: root.width, root.height
+        size_hint: None, None
+        size: 420, 350
+        pos_hint: {'center_x': .5, 'center_y': .5}
         orientation: "vertical"
 
         padding: 10
         spacing: 5
+
+        canvas:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+            Color:
+                rgba: (.5,.5,.5,1)
+            Line:
+                width: 2
+                rectangle: self.x, self.y, self.width, self.height
+            
 
         LblLogin:
             text: "Login"
@@ -87,8 +102,8 @@
                         background_color: (1, 1, 1, 0)
                         size_hint: (None, None)
                         size: 30, 30
-                        y: 134
-                        x: 260
+                        y: password_input.y
+                        x: password_input.x
                         pos_hint: {"right":0.9}
                         on_press: root.remove_password_mask()
                         background_disabled_normal: "False"
