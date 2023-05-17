@@ -9,7 +9,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 # Isso precisa estar antes do "from kivy.core.window import Window" se não um sobrepõe o outro
 from kivy.config import Config
-
 Config.set('graphics', 'resizable', 0)
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 from kivy.core.window import Window
@@ -214,12 +213,7 @@ class TIMER(BoxLayout):
 
 
 class JanelaAlertas(Screen):
-    def on_enter(self):
-        global temporizador1, temporizador2, temporizador3, temporizador4
-        temporizador1 = Timer.MLTimer()
-        temporizador2 = Timer.MLTimer()
-        temporizador3 = Timer.MLTimer()
-        temporizador4 = Timer.MLTimer()
+    pass
 
 
 class JanelaReport(Screen):
@@ -276,7 +270,7 @@ kv = Builder.load_file('Resources/janelas.kv')  # "Chamar" o arquivo kivy
 # (Obs: Se tiver mais de uma janela é preciso declarar essa variável antes do windowManager)
 
 ard_comunic_thread = None
-temporizador1 = None
-temporizador2 = None
-temporizador3 = None
-temporizador4 = None
+temporizador1 = Timer.MLTimer()
+temporizador2 = Timer.MLTimer()
+temporizador3 = Timer.MLTimer()
+temporizador4 = Timer.MLTimer()
