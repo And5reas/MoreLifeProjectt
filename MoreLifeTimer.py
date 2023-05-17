@@ -11,6 +11,7 @@ class MLTimer:
     lbl_timer = None
     event = None
     default_timer = None
+    funcInstanceTimer = None
     
     def __init__(self):
         self.event = Event()
@@ -21,12 +22,13 @@ class MLTimer:
         self.notificacao.add_actions(label="Ok")
         self.notificacao.set_audio(audio.LoopingAlarm, loop=True)
 
-    def iniciar_timer(self, hrs, minn, sec, lbl_tempo):
+    def iniciar_timer(self, hrs, minn, sec, lbl_tempo, func_instance_timer):
         self.horas = int(hrs)
         self.minutos = int(minn)
         self.lbl_timer = lbl_tempo
         self.default_timer = lbl_tempo.text
         self.segundos = self.horas * 3600 + self.minutos * 60 + int(sec)
+        self.funcInstanceTimer = func_instance_timer
         b = Thread(target=self.func_timer)
         b.start()
 
@@ -65,6 +67,7 @@ class MLTimer:
             self.notificacao.show()
             sleep(1)
             self.lbl_timer.text = self.default_timer
+            self.funcInstanceTimer()
         self.event.clear()
 
         

@@ -177,17 +177,16 @@ class TIMER(BoxLayout):
         elif name == "Timer4":
             temporizador4.fecharThreadTimer()
 
-    @staticmethod
-    def add_chrono(lbl_tempo, name):
+    def add_chrono(self, lbl_tempo, name):
         hrs, minn, sec = lbl_tempo.text.split(':')
         if name == "Timer1":
-            temporizador1.iniciar_timer(hrs, minn, sec, lbl_tempo)
+            temporizador1.iniciar_timer(hrs, minn, sec, lbl_tempo, self.set_img_start)
         elif name == "Timer2":
-            temporizador2.iniciar_timer(hrs, minn, sec, lbl_tempo)
+            temporizador2.iniciar_timer(hrs, minn, sec, lbl_tempo, self.set_img_start)
         elif name == "Timer3":
-            temporizador3.iniciar_timer(hrs, minn, sec, lbl_tempo)
+            temporizador3.iniciar_timer(hrs, minn, sec, lbl_tempo, self.set_img_start)
         elif name == "Timer4":
-            temporizador4.iniciar_timer(hrs, minn, sec, lbl_tempo)
+            temporizador4.iniciar_timer(hrs, minn, sec, lbl_tempo, self.set_img_start)
 
     def play_pause(self, lbl_tempo):
         if not self.checar:
