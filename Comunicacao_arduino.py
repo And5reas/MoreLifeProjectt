@@ -1,11 +1,7 @@
-import time
-
-import serial.tools.list_ports
-import serial
-from threading import Thread
 from threading import Event
-
-import win32con
+from threading import Thread
+import serial
+import serial.tools.list_ports
 
 
 class Reading:
@@ -75,6 +71,7 @@ class Reading:
             play_object = wave_object.play()
             play_object.wait_done()
             import win32api
+            import win32con
             win32api.MessageBox(0, 'Seus batimentos estão acima de 170, notificações foram emviadas para as pessoas'
                                    ' cadastradas', 'BTM Acima de 170!', win32con.MB_ICONEXCLAMATION)
         elif btm > 90:
