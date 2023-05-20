@@ -13,8 +13,8 @@
             btn_color3: .5, .5, .5, 1
             btn_color4: .5, .5, .5, 1
                 
-        GridLayout:
-            cols: 1
+        BoxLayout:
+            orientation: "vertical"
 
             BoxLayout:
                 orientation: "horizontal"
@@ -27,7 +27,7 @@
                 ToggleButton:
                     id: tgb_start_read_beats
                     text: "Começar"
-                    on_press: root.start_read_beats()
+                    on_state: root.start_read_beats()
                     
             BoxLayout:
                 orientation: "horizontal"
@@ -42,5 +42,6 @@
                     text: 'Printar'
                     color: (1,1,1,1)
             Label:
+                id: user_state
                 text: "Coisas"
                 color: (1,1,1,1)

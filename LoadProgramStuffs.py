@@ -2,8 +2,13 @@ from sys import platform
 
 
 class WindowInformation:
-    @staticmethod
-    def get_window_size():
+    size_x_monitor = None
+    size_y_monitor = None
+
+    def __init__(self):
+        self.get_window_size()
+
+    def get_window_size(self):
         # Checar qual o tamanho do monitor do usuário
         if platform == 'linux2':
             import subprocess
@@ -22,13 +27,13 @@ class WindowInformation:
         else:
             # For mobile devices, use full screen
             screen_x, screen_y = 800, 600  # return something
-        return screen_x, screen_y
+        self.size_x_monitor = screen_x
+        self.size_y_monitor = screen_y
 
-    @staticmethod
-    def center_window(size_x_kivy_window, size_y_kivy_window, window_kivy_instance, size_x_monitor, size_y_monitor):
+    def center_window(self, size_x_kivy_window, size_y_kivy_window, window_kivy_instance):
         window_kivy_instance.size = (size_x_kivy_window, size_y_kivy_window)
-        window_kivy_instance.left = (size_x_monitor - size_x_kivy_window) / 2
-        window_kivy_instance.top = (size_y_monitor - size_y_kivy_window) / 2
+        window_kivy_instance.left = (self.size_x_monitor - size_x_kivy_window) / 2
+        window_kivy_instance.top = (self.size_y_monitor - size_y_kivy_window) / 2
 
 
 class LoadConfigStuffs:

@@ -36,7 +36,7 @@ class MLDataBase:
             self.conn.close()
 
     def save_db(self, colun, item_to_save):
-        if item_to_save is 1 or item_to_save is 0:
+        if item_to_save == 1 or item_to_save == 0:
             self.conn.execute(f"UPDATE Config SET {colun} = {item_to_save} WHERE ID = 1")
         elif ":" in item_to_save:
             self.conn.execute(f"UPDATE Config SET {colun} = '{item_to_save}' WHERE ID = 1")

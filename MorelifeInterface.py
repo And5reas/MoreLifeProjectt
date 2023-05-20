@@ -7,14 +7,10 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
-# Isso precisa estar antes do "from kivy.core.window import Window" se não um sobrepõe o outro
-from kivy.config import Config
-Config.read("Resources/config.ini")
 from kivy.core.window import Window
 
 # Declarando variáveis e objetos
 Wi = LoadStuff.WindowInformation()
-screen_x, screen_y = Wi.get_window_size()
 DBML = DBMorelife.MLDataBase()
 DBML.create_db()
 LoadConfigs = LoadStuff.LoadConfigStuffs(Window, DBML.load_config())
@@ -46,7 +42,6 @@ class JanelaLogin(Screen):
             self.ids.password_input.background_color = (212 / 255, 25 / 255, 32 / 255, .6)
             self.ids.email_input.background_color = (212 / 255, 25 / 255, 32 / 255, .6)
             self.ids.error_login.text = "Email e/ou senha inválido(s)"
-
         return False
 
     def validate_color(self):
@@ -54,11 +49,6 @@ class JanelaLogin(Screen):
             self.ids.password_input.background_color = (1, 1, 1, 1)
         if self.ids.email_input.background_color != (1, 1, 1, 1):
             self.ids.email_input.background_color = (1, 1, 1, 1)
-
-    def on_pre_enter(self):
-        saved_screen_size_w, saved_screen_size_h = LoadConfigs.load_main_screen_config()
-        Wi.center_window(saved_screen_size_w, saved_screen_size_h, Window, screen_x, screen_y)
-        LoadConfigs.load_config_color_change("Dark")
 
     def remove_password_mask(self):
         if not self.checar:
@@ -78,18 +68,23 @@ class JanelaLogin(Screen):
     def on_kv_post(self, base_widget):
         if LoadConfigs.IsLogged == 1:
             saved_screen_size_w, saved_screen_size_h = LoadConfigs.load_main_screen_config()
-            Wi.center_window(saved_screen_size_w, saved_screen_size_h, Window, screen_x, screen_y)
+            Wi.center_window(saved_screen_size_w, saved_screen_size_h, Window)
             self.manager.current = 'main_screen'
+        saved_screen_size_w, saved_screen_size_h = LoadConfigs.load_main_screen_config()
+        Wi.center_window(saved_screen_size_w, saved_screen_size_h, Window)
+        LoadConfigs.load_config_color_change("Dark")
 
 
 class JanelaMain(Screen):
     def start_read_beats(self):
         from Comunicacao_arduino import Reading
         global ard_comunic_thread
-        ard_comunic_thread = Reading()
+        if ard_comunic_thread is None:
+            ard_comunic_thread = Reading()
         if self.ids.tgb_start_read_beats.state == 'down':
             ard_comunic_thread.event.set()
-            ard_comunic_thread.iniciar(self.ids.Batimentos, self.ids.tgb_start_read_beats)
+            ard_comunic_thread.iniciar(self.ids.Batimentos, self.ids.tgb_start_read_beats, self.ids.user_state,
+                                       self.ids.tgb_start_read_beats)
             self.ids.tgb_start_read_beats.text = 'Parar'
         if self.ids.tgb_start_read_beats.state == 'normal':
             ard_comunic_thread.event.clear()
@@ -222,15 +217,6 @@ class JanelaConfig(Screen):
         LoadConfigs.load_config_color_change(tema)
         DBML.save_db('Teme', tema)
 
-    @staticmethod
-    def change_resolution(resolution):
-        if resolution == "FullScreen":
-            Wi.center_window(screen_x, screen_y, Window, screen_x, screen_y)
-        else:
-            h, w = resolution.split(',')
-            Wi.center_window(int(h), int(w), Window, screen_x, screen_y)
-        DBML.save_db('Resolution', resolution)
-
     def on_leave(self):
         DBML.commit_and_close()
 
@@ -248,6 +234,8 @@ class WindowManager(ScreenManager):
 
 class MoreLife(App):
     def build(self):
+        from kivy.config import Config
+        Config.read("morelife.ini")
         self.icon = "Resources/Imgs/icon.png"
         return kv
 
