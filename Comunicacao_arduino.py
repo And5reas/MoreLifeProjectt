@@ -33,7 +33,8 @@ class Reading:
                 port = str(port)
                 porta, name_porta = port.split(' - ')
                 name_porta = name_porta.split(' (')
-                if name_porta[0] == "Arduino Uno" or name_porta[0] == "USB Serial Device":
+                if (name_porta[0] == "Arduino Uno" or name_porta[0] == "USB Serial Device") and \
+                        (name_porta[0] != "Porta de comunicação" or name_porta[0] != "Communications Port"):
                     self.option = porta
                     self.funciona = True
                     break

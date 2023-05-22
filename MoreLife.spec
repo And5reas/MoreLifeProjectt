@@ -42,7 +42,7 @@ exe = EXE(
     icon=['icon.ico'],
 )
 coll = COLLECT(
-    exe, Tree('D:\\Área de trabalho\\_Python\\MoreLifeProjectt\\Resources\\'),
+    exe, Tree('D:\\Desktop\\_Python\\MoreLifeProjectt\\Resources\\'),
     a.binaries,
     a.zipfiles,
     a.datas, *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],
