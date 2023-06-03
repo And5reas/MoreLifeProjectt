@@ -27,14 +27,21 @@ class Reading:
         self.tgb_start_read_beats = tgb_start_read_beats
         a.start()
 
+    @staticmethod
+    def verificar_portas_com(porta):
+        lista = ["Porta de comunicação", "Communications Port"]
+        for i in lista:
+            if porta == i:
+                return False
+        return True
+
     def connect(self):
         try:
             for port in self.ports:
                 port = str(port)
                 porta, name_porta = port.split(' - ')
                 name_porta = name_porta.split(' (')
-                if (name_porta[0] == "Arduino Uno" or name_porta[0] == "USB Serial Device") and \
-                        (name_porta[0] != "Porta de comunicação" or name_porta[0] != "Communications Port"):
+                if self.verificar_portas_com(name_porta[0]):
                     self.option = porta
                     self.funciona = True
                     break
