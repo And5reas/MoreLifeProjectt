@@ -12,15 +12,10 @@ class MLTimer:
     event = None
     default_timer = None
     funcInstanceTimer = None
+    notificacao = None
     
     def __init__(self):
         self.event = Event()
-        self.notificacao = Notification(app_id="MoreLife",
-                                        title="MoreLife Alarme",
-                                        msg="Tempo expirado",
-                                        duration="short")
-        self.notificacao.add_actions(label="Ok")
-        self.notificacao.set_audio(audio.LoopingAlarm, loop=True)
 
     def iniciar_timer(self, hrs, minn, sec, lbl_tempo, func_instance_timer):
         self.horas = int(hrs)
@@ -29,6 +24,12 @@ class MLTimer:
         self.default_timer = lbl_tempo.text
         self.segundos = self.horas * 3600 + self.minutos * 60 + int(sec)
         self.funcInstanceTimer = func_instance_timer
+        self.notificacao = Notification(app_id="MoreLife",
+                                        title="MoreLife Alarme",
+                                        msg="Tempo expirado",
+                                        duration="short")
+        self.notificacao.add_actions(label="Ok")
+        self.notificacao.set_audio(audio.LoopingAlarm, loop=True)
         b = Thread(target=self.func_timer)
         b.start()
 
@@ -53,6 +54,7 @@ class MLTimer:
 
     def func_timer(self):
         self.event.clear()
+        angulo_circulo = 360/self.segundos
         for z in range(self.segundos, -1, -1):
             sleep(1)
             if self.event.is_set():
@@ -63,8 +65,10 @@ class MLTimer:
                 self.horas -= 1
                 self.minutos = int(59)
             self.lbl_timer.text = self.formatarTimer(z)
+            self.lbl_timer.animation_ellipse = angulo_circulo * z
         if self.lbl_timer.text == '00:00:00':
             self.notificacao.show()
+            self.notificacao = None
             sleep(1)
             self.lbl_timer.text = self.default_timer
             self.funcInstanceTimer()

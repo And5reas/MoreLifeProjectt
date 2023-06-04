@@ -77,8 +77,27 @@
     Label:
         id: lbl_timer_timer
         text: '00:00:00'
+        animation_ellipse: 360
         font_size: '26pt'
         color: (1,1,1,1)
+        canvas.before:
+            Color:
+                rgba: 1,1,1,.5
+            Ellipse:
+                pos: (self.x + self.width/4), (self.y + self.height/4)
+                segments: 1000
+                angle_start: 0
+                angle_end: 360
+                size: (self.width/2), (self.height/2)
+            Color:
+                rgba: 0,.3,.4,1
+            Ellipse:
+                pos: (self.x + self.width/4) + 5, (self.y + self.height/4) + 5
+                segments: 1000
+                angle_start: 0
+                angle_end: self.animation_ellipse
+                size: (self.width/2) - 10, (self.height/2) - 10
+            
     BoxLayout:
         orientation: 'horizontal'
         spacing: 10
