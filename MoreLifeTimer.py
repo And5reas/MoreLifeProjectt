@@ -11,19 +11,19 @@ class MLTimer:
     lbl_timer = None
     event = None
     default_timer = None
-    funcInstanceTimer = None
+    timerImage = None
     notificacao = None
     
     def __init__(self):
         self.event = Event()
 
-    def iniciar_timer(self, hrs, minn, sec, lbl_tempo, func_instance_timer):
+    def iniciar_timer(self, hrs, minn, sec, lbl_tempo, instance_timer_btnPlay):
         self.horas = int(hrs)
         self.minutos = int(minn)
         self.lbl_timer = lbl_tempo
         self.default_timer = lbl_tempo.text
         self.segundos = self.horas * 3600 + self.minutos * 60 + int(sec)
-        self.funcInstanceTimer = func_instance_timer
+        self.timerImage = instance_timer_btnPlay
         self.notificacao = Notification(app_id="MoreLife",
                                         title="MoreLife Alarme",
                                         msg="Tempo expirado",
@@ -70,8 +70,9 @@ class MLTimer:
             self.notificacao.show()
             self.notificacao = None
             sleep(1)
+            self.lbl_timer.animation_ellipse = 360
             self.lbl_timer.text = self.default_timer
-            self.funcInstanceTimer()
+            self.timerImage.source = "Resources\\Imgs\\Play.png"
         self.event.clear()
 
         

@@ -175,13 +175,13 @@ class TIMER(BoxLayout):
     def add_chrono(self, lbl_tempo, name):
         hrs, minn, sec = lbl_tempo.text.split(':')
         if name == "Timer1":
-            temporizador1.iniciar_timer(hrs, minn, sec, lbl_tempo, self.set_img_start)
+            temporizador1.iniciar_timer(hrs, minn, sec, lbl_tempo, self.ids['imgPlay'])
         elif name == "Timer2":
-            temporizador2.iniciar_timer(hrs, minn, sec, lbl_tempo, self.set_img_start)
+            temporizador2.iniciar_timer(hrs, minn, sec, lbl_tempo, self.ids['imgPlay'])
         elif name == "Timer3":
-            temporizador3.iniciar_timer(hrs, minn, sec, lbl_tempo, self.set_img_start)
+            temporizador3.iniciar_timer(hrs, minn, sec, lbl_tempo, self.ids['imgPlay'])
         elif name == "Timer4":
-            temporizador4.iniciar_timer(hrs, minn, sec, lbl_tempo, self.set_img_start)
+            temporizador4.iniciar_timer(hrs, minn, sec, lbl_tempo, self.ids['imgPlay'])
 
     def play_pause(self, lbl_tempo):
         if not self.checar:
