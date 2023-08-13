@@ -28,18 +28,13 @@ class JanelaLogin(Screen):
 
         if Login.Check(user_email, user_password):
             DBML.start_connection()
+            self.ids.error_login.text = ""
             if self.ids.check_keep_login.active:
                 DBML.save_db('IsLogged', 1)
             else:
                 DBML.save_db('IsLogged', 0)
             DBML.commit_and_close()
             return True
-
-        if "@" in user_email:
-            self.ids.error_login.text = ""
-            nome_user_email, domain_email = user_email.split("@")
-            print(f"Nome do email: {nome_user_email}\nServidor: {domain_email}")
-            print(f"Email: {user_email}\nSenha: {user_password}")
         else:
             self.ids.password_input.background_color = (212 / 255, 25 / 255, 32 / 255, .6)
             self.ids.email_input.background_color = (212 / 255, 25 / 255, 32 / 255, .6)
