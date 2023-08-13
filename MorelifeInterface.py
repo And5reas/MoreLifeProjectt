@@ -1,6 +1,7 @@
 import LoadProgramStuffs as LoadStuff
 import DataBaseMorelife as DBMorelife
 import MoreLifeTimer as Timer
+import Login
 
 from kivy.app import App
 from kivy.lang import Builder
@@ -14,6 +15,7 @@ Wi = LoadStuff.WindowInformation()
 DBML = DBMorelife.MLDataBase()
 DBML.create_db()
 LoadConfigs = LoadStuff.LoadConfigStuffs(Window, DBML.load_config())
+Login = Login.confirmLogin()
 
 
 # Dedinir janelas
@@ -24,7 +26,7 @@ class JanelaLogin(Screen):
         user_email = self.ids.email_input.text
         user_password = self.ids.password_input.text
 
-        if user_email == "1" and user_password == "123":
+        if Login.Check(user_email, user_password):
             DBML.start_connection()
             if self.ids.check_keep_login.active:
                 DBML.save_db('IsLogged', 1)
