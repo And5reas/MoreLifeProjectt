@@ -1,0 +1,47 @@
+<JanelaMain>:
+    name: "main_screen"
+    GridLayout:
+        size: root.width, root.height
+        cols: 2
+
+        padding: 40
+        spacing: 40
+
+        BtnLateral:
+            btn_color1: 51/255, 184/255, 18/255, .5
+            btn_color2: .5, .5, .5, 1
+            btn_color3: .5, .5, .5, 1
+            btn_color4: .5, .5, .5, 1
+                
+        BoxLayout:
+            orientation: "vertical"
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, .1
+
+                Label:
+                    text: "Deseja iniciar o MoreLife?"
+                    color: (1,1,1,1)
+
+                ToggleButton:
+                    id: tgb_start_read_beats
+                    text: "Começar"
+                    on_state: root.start_read_beats()
+                    
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, .1
+
+                Label:
+                    text: "Batimentos por minuto:"
+                    color: (1,1,1,1)
+
+                Label:
+                    id: Batimentos
+                    text: 'Printar'
+                    color: (1,1,1,1)
+            Label:
+                id: user_state
+                text: "Coisas"
+                color: (1,1,1,1)

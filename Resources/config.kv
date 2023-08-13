@@ -1,0 +1,29 @@
+<JanelaConfig>:
+    name: "config_screen"
+    GridLayout:
+        size: root.width, root.height
+        cols: 2
+
+        padding: 40
+        spacing: 40
+
+        BtnLateral:
+            btn_color1: .5, .5, .5, 1
+            btn_color2: .5, .5, .5, 1
+            btn_color3: .5, .5, .5, 1
+            btn_color4: 51/255, 184/255, 18/255, .5
+        
+        GridLayout:
+            cols: 1
+
+            spacing: 5
+            padding: 10
+
+            Spinner:
+                id: spinner_tema
+                text: "Temas"
+                values: ["Dark", "Dark Blue"]
+                pos_hint: {"center_x": .5, "center_y": .5}
+                size_hint_y: None
+                height: 40
+                on_text: root.change_tema(self.text)

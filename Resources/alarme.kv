@@ -1,0 +1,160 @@
+<POPUP>:
+    size_hint: None, None
+    title: "Editar temporizador"
+    size: 450, 220
+    BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        padding: 5
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, None
+            size: 0, 30
+            Label:
+                text: "Nome: "
+                color: 1,1,1,1
+            TextInput:
+                id: TxtInp_mudarNome
+                multiline: False
+                write_tab: False
+                
+        BoxLayout:
+            orientation: "horizontal"
+            size: 50, 150
+            spacing: 3
+            Spinner:
+                text: "Horas"
+                font_size: 22
+                id: Spn_hrs
+                values: ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"]
+            Spinner:
+                text: "Minutos"
+                font_size: 22
+                id: Spn_min
+                values: ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]  
+            Spinner:
+                text: "Segundos"
+                font_size: 22
+                id: Spn_sec
+                values: ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]  
+            Button:
+                text: "Modificar"
+                on_press: root.modificar()
+                
+<TIMER>:
+    orientation: 'vertical'
+    padding: 10
+    canvas:
+        Color:
+            rgba: .5, .5, .5, .45
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [25,]
+    FloatLayout:
+        size_hint: 1, .15
+        Label:
+            id: lbl_nome_timer
+            text: 'NOME'
+            text_size: self.size
+            color: (1,1,1,1)
+            size_hint: None, 1
+            size: 200, 0
+            pos: self.parent.pos
+        RoundedButtonEdit:
+            radius: [25,]
+            size_hint: None, None
+            size: 40, 40
+            pos: self.parent.x + self.parent.width - 40, self.parent.y - 10
+            on_release: root.editar(root)
+            Image:
+                id: imgPlay
+                y: self.parent.y
+                x: self.parent.x
+                size: self.parent.width, self.parent.height
+                source: "Resources\Imgs\editt.png"
+            
+    Label:
+        id: lbl_timer_timer
+        text: '00:00:00'
+        animation_ellipse: 360
+        font_size: '26pt'
+        color: (1,1,1,1)
+        canvas.before:
+            Color:
+                rgba: 1,1,1,.5
+            Ellipse:
+                pos: (self.x + self.width/4), (self.y + self.height/4)
+                segments: 1000
+                angle_start: 0
+                angle_end: 360
+                size: (self.width/2), (self.height/2)
+            Color:
+                rgba: 0,.3,.4,1
+            Ellipse:
+                pos: (self.x + self.width/4) + 5, (self.y + self.height/4) + 5
+                segments: 1000
+                angle_start: 0
+                angle_end: self.animation_ellipse
+                size: (self.width/2) - 10, (self.height/2) - 10
+            
+    BoxLayout:
+        orientation: 'horizontal'
+        spacing: 10
+        size_hint: None, None
+        pos_hint: {'center_x': .5}
+        size: 140, 70
+        RoundedButton:
+            size_hint: None, None
+            size: 70, 70
+            on_release:
+                root.play_pause(lbl_timer_timer)
+            Image:
+                id: imgPlay
+                y: self.parent.y
+                x: self.parent.x + 5
+                size: self.parent.width, self.parent.height
+                source: "Resources\Imgs\Play.png"
+        RoundedButton:
+            size_hint: None, None
+            size: 70, 70
+            on_release:
+                root.resetar()
+            Image:
+                y: self.parent.y
+                x: self.parent.x
+                size: self.parent.width, self.parent.height
+                source: "Resources\Imgs\Reset.png"
+            
+
+<JanelaAlertas>:
+    name: "alert_screen"
+    GridLayout:
+        size: root.width, root.height
+        cols: 2
+
+        padding: 40
+        spacing: 40
+            
+        BtnLateral:
+            btn_color1: .5, .5, .5, 1
+            btn_color2: 51/255, 184/255, 18/255, .5
+            btn_color3: .5, .5, .5, 1
+            btn_color4: .5, .5, .5, 1
+                 
+        GridLayout:
+            rows: 2
+            cols: 2
+            spacing: 10
+
+            TIMER:
+                name: 'Timer1'
+            TIMER:
+                name: 'Timer2'
+            TIMER:
+                name: 'Timer3'
+            TIMER:
+                name: 'Timer4'
+                
+            
+

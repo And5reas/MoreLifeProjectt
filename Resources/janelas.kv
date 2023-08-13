@@ -1,0 +1,96 @@
+#: import NoTransition kivy.uix.screenmanager.NoTransition
+#: include Resources/login.kv
+#: include Resources/principal.kv
+#: include Resources/alarme.kv
+#: include Resources/report.kv
+#: include Resources/config.kv
+#: include Resources/BtnDaLateral.kv    
+
+WindowManager:
+    transition: NoTransition()
+    
+    JanelaLogin:
+        
+    JanelaMain:
+        
+    JanelaAlertas:
+        
+    JanelaReport:
+        
+    JanelaConfig:
+        
+
+<TextInput>:
+    canvas.before:
+        Color:
+            rgba: (0, 0, 0, 1)
+        Line:
+            width: 1.1
+            rectangle: self.x, self.y, self.width, self.height
+    background_normal: ''
+    background_color: (1, 1, 1, .5)
+
+<DefaultBtnWithBorder@Button>:
+    canvas:
+        Color:
+            rgba: (0, 0, 0, 1)
+        Line:
+            width: 1.1
+            rectangle: self.x, self.y, self.width, self.height
+    background_normal: ''
+    background_color: (1, 1, 1, 0.5)
+
+<Button>:
+    background_normal: ''
+    background_color: (.5, .5, .5, 1)
+
+<Spinner>:
+    canvas.before:
+        Color:
+            rgba: (.6, .6, .6, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    background_normal: ''
+    background_color: (.6 ,.6 ,.6 ,1)
+
+<Label>:
+    color: (0,0,0,1)
+
+<LblLogin@Label>:
+    canvas.before:
+        Color:
+            rgba: (1,1,1,.5)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    color: (0,0,0,1)
+
+<CheckBox>:
+    canvas.before:
+        Color:
+            rgba: (0,0,0,1)
+        Line:
+            width: 1
+            rectangle: self.x, self.y, self.width, self.height
+
+<RoundedButton@Button>:
+    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+    canvas.before:
+        Color:
+            rgba: (61/255, 1, 168/255, .7) if self.state=='normal' else (197/255, 61/255, 1, .4)  # visual feedback of press
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [100,]
+
+<RoundedButtonEdit@Button>:
+    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+    canvas.before:
+        Color:
+            rgba: (0, 0, 0, 0) if self.state=='normal' else (197/255, 61/255, 1, .4)  # visual feedback of press
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10,]
+            

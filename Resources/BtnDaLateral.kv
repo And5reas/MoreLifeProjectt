@@ -1,0 +1,111 @@
+<BtnLateral@BoxLayout>:
+    orientation: "vertical"
+    size_hint: None, 1
+    size: 240, 0
+    
+    btn_color1: .5, .5, .5, 1
+    btn_color2: .5, .5, .5, 1
+    btn_color3: .5, .5, .5, 1
+    btn_color4: .5, .5, .5, 1
+
+    canvas:
+        Color:
+            rgba: 0.3, 0.2, 0.3, .5
+        Rectangle:
+            pos: self.x - 40, self.y - 40
+            size: self.width + 60, self.height + 80
+
+    spacing: 40
+
+    Image:
+        source: "Resources/Imgs/Logo_pequeno.png"
+        size_hint: 1, .35
+        
+    BoxLayout:
+        orientation: "vertical"
+        
+        BoxLayout:
+            orientation: "vertical"
+            
+            DefaultBtnWithBorder:
+                text: "Principal"
+                background_color: root.btn_color1
+                on_release:
+                    app.root.current = "main_screen"
+                background_disabled_normal: "False"
+                Image:
+                    id: eye_password_mask
+                    y: self.parent.y + (self.parent.height/2) - 16
+                    x: self.parent.x + 40
+                    size: 30, 30
+                    source: "Resources/Imgs/Icons/casa.png"
+
+            DefaultBtnWithBorder:
+                text: "Alertas"
+                background_color: root.btn_color2
+                on_release:
+                    app.root.current = "alert_screen"
+                background_disabled_normal: "False"
+                Image:
+                    id: eye_password_mask
+                    y: self.parent.y + (self.parent.height/2) - 16
+                    x: self.parent.x + 40
+                    size: 30, 30
+                    source: "Resources/Imgs/Icons/exclamacao-de-alarme.png"
+
+            DefaultBtnWithBorder:
+                text: "Relatórios"
+                background_color: root.btn_color3
+                on_release:
+                    app.root.current = "report_screen"
+                background_disabled_normal: "False"
+                Image:
+                    id: eye_password_mask
+                    y: self.parent.y + (self.parent.height/2) - 16
+                    x: self.parent.x + 40
+                    size: 30, 30
+                    source: "Resources/Imgs/Icons/grafico-histograma.png"
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1, None
+            size: 0, 130
+
+            DefaultBtnWithBorder:
+                text: "Configurações"
+                background_color: root.btn_color4
+                text_size: self.width - 130/3, self.height - 130/3
+                on_release:
+                    app.root.current = "config_screen"
+                background_disabled_normal: "False"
+                Image:
+                    id: eye_password_mask
+                    y: self.parent.y + (self.height/2) - 10
+                    x: self.parent.x + (self.width/2) + 180
+                    size: 30, 30
+                    source: "Resources/Imgs/Icons/controles-deslizantes-de-configuracoes.png"
+
+            DefaultBtnWithBorder:
+                text: "Conta"
+                text_size: self.width - 130/3, self.height - 130/3
+                background_disabled_normal: "False"
+                Image:
+                    id: eye_password_mask
+                    y: self.parent.y + (self.height/2) - 10
+                    x: self.parent.x + (self.width/2) + 180
+                    size: 30, 30
+                    source: "Resources/Imgs/Icons/do-utilizador.png"
+
+            DefaultBtnWithBorder:
+                text: "Sair"
+                text_size: self.width - 130/3, self.height - 130/3
+                on_press: app.root.current = "login_screen"
+                background_disabled_normal: "False"
+                Image:
+                    id: eye_password_mask
+                    y: self.parent.y + (self.height/2) - 10
+                    x: self.parent.x + (self.width/2) + 180
+                    size: 30, 30
+                    source: "Resources/Imgs/Icons/cartao-de-endereco.png"
+
+    

@@ -1,0 +1,143 @@
+<JanelaLogin>:
+    name: "login_screen"
+    BoxLayout:
+        size_hint: None, None
+        size: 420, 350
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        orientation: "vertical"
+
+        padding: 10
+        spacing: 5
+
+        canvas:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+            Color:
+                rgba: (.5,.5,.5,1)
+            Line:
+                width: 2
+                rectangle: self.x, self.y, self.width, self.height
+            
+
+        LblLogin:
+            text: "Login"
+            font_size: "15pt"
+            pos_hint: {'center_x': 0.5}
+            size_hint: (None, None)
+            height: 25
+            width: 100
+
+        Image:
+            source: "Resources/Imgs/Logo_pequeno.png"
+
+        GridLayout:
+            cols: 2
+            spacing: 8
+
+            LblLogin:
+                text: "Email:"
+                font_size: "11pt"
+                size_hint: (None, None)
+                width: 38
+                height: 30
+            TextInput:
+                id: email_input
+                multiline: False
+                font_size: "11pt"
+                size_hint: (None, None)
+                width: 326
+                height: 30
+                do_wrap: False
+                write_tab: False
+                on_text: root.validate_color()
+
+            LblLogin:
+                text: "Senha:"
+                font_size: "11pt"
+                size_hint: (None, None)
+                width: 38
+                height: 30
+            TextInput:
+                id: password_input
+                password: True
+                multiline: False
+                font_size: "11pt"
+                size_hint: (None, None)
+                width: 326
+                height: 30
+                do_wrap: False
+                write_tab: False
+                on_text: root.validate_color()
+
+            LblLogin:
+                # Label para pular uma coluna do grid
+
+            BoxLayout
+                orientation: "horizontal"
+                spacing: 10
+
+                LblLogin:
+                    text: "[ref=Lembrar senha e email?]Lembrar senha e email?[/ref]"
+                    pos_hint: {'center_y': 0.5}
+                    markup: True
+                    size_hint: (None, None)
+                    width: 155
+                    height: 40
+                    on_ref_press: root.keep_login(check_keep_login.active)
+
+                CheckBox:
+                    id: check_keep_login
+                    pos_hint: {'center_y': 0.5}
+                    size_hint: (None, None)
+                    width: 15
+                    height: 15
+
+                
+                FloatLayout:
+                    Button:
+                        background_normal: ''
+                        background_color: (1, 1, 1, 0)
+                        size_hint: (None, None)
+                        size: 30, 30
+                        y: password_input.y
+                        x: password_input.x
+                        pos_hint: {"right":0.9}
+                        on_press: root.remove_password_mask()
+                        background_disabled_normal: "False"
+                        Image:
+                            id: eye_password_mask
+                            y: self.parent.y
+                            x: self.parent.x
+                            size: 30, 30
+                            source: "Resources\Imgs\zoio_fechado.png"
+
+        LblLogin:
+            text: ""
+            id: error_login
+            font_size: "10pt"
+            pos_hint: {'center_x': 0.5}
+            size_hint: (None, None)
+            height: 25
+            width: 100
+            color: (1,0,0,1)
+
+
+        Button:
+            text: "Login"
+            pos_hint: {'center_x': 0.5}
+            size_hint: (None, None)
+            height: 25
+            width: 90
+            background_color: .45,.45,.45,1
+            on_release: if root.btn_login(): app.root.current = "main_screen"
+
+        Button:
+            text: "Registrar-se"
+            pos_hint: {'center_x': 0.5}
+            size_hint: (None, None)
+            height: 25
+            width: 90
+            background_color: .45,.45,.45,1
