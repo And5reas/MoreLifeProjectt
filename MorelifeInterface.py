@@ -1,3 +1,4 @@
+import webbrowser
 import LoadProgramStuffs as LoadStuff
 import DataBaseMorelife as DBMorelife
 import MoreLifeTimer as Timer
@@ -21,6 +22,9 @@ Login = Login.confirmLogin()
 # Dedinir janelas
 class JanelaLogin(Screen):
     checar = True
+
+    def btn_registrar(self):
+        webbrowser.open("https://morelife.vercel.app/")
 
     def btn_login(self):
         user_email = self.ids.email_input.text
