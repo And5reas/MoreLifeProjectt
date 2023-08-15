@@ -20,3 +20,6 @@ Digite estes comandos no terminal
     pip install kivy[base] kivy_examples --pre --extra-index-url https://kivy.org/downloads/simple/
 
 ###### OBS: Se o python da sua máquina não estiver no PATH, você terá que adicionar o python no PATH ou executar esses comandos diretamente na pasta onde está o "python.exe"
+
+## Notas
+Precisamos mudar a forma como o MoreLife está armazenando os dados locais o membro Andreas teva a ideia de mudar o arquivo db para json, pois ele acha q vai ser mais rápido e fácil de organizar as coisas ou colocar todos os dados locais para o FireBase como está o bando de login.
