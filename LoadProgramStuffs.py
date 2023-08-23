@@ -48,13 +48,13 @@ class LoadConfigStuffs:
 
     def update_dados(self, lista):
         self.config_list = lista
-        self.IsLogged = lista[0][3]
-        self.timers = [lista[0][4], lista[0][5], lista[0][6], lista[0][7]]
+        self.IsLogged = lista['isLogged']
+        self.timers = [lista['Timer1'], lista['Timer2'], lista['Timer3'], lista['Timer4']]
 
     def load_main_screen_config(self):
-        screen_size = self.config_list[0][1]
+        screen_size = self.config_list['resolution']
         screen_size_w, screen_size_h = screen_size.split(", ")
-        self.window_kivy_instance.clearcolor = self.colors_teme[self.config_list[0][2]]
+        self.window_kivy_instance.clearcolor = self.colors_teme[self.config_list['theme']]
         return int(screen_size_w), int(screen_size_h)
 
     def load_config_color_change(self, teme_name):

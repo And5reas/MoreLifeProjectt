@@ -1,6 +1,6 @@
 import webbrowser
 import LoadProgramStuffs as LoadStuff
-import DataBaseMorelife as DBMorelife
+import DataBase
 import MoreLifeTimer as Timer
 import Login
 
@@ -13,9 +13,9 @@ from kivy.core.window import Window
 
 # Declarando variáveis e objetos
 Wi = LoadStuff.WindowInformation()
-DBML = DBMorelife.MLDataBase()
-DBML.create_db()
-LoadConfigs = LoadStuff.LoadConfigStuffs(Window, DBML.load_config())
+DBML = DataBase.dataBase()
+DBML.createJson()
+LoadConfigs = LoadStuff.LoadConfigStuffs(Window, DBML.loadConfig())
 Login = Login.confirmLogin()
 
 
@@ -31,13 +31,11 @@ class JanelaLogin(Screen):
         user_password = self.ids.password_input.text
 
         if Login.Check(user_email, user_password):
-            DBML.start_connection()
             self.ids.error_login.text = ""
             if self.ids.check_keep_login.active:
-                DBML.save_db('IsLogged', 1)
+                DBML.saveConfig('isLogged', 1)
             else:
-                DBML.save_db('IsLogged', 0)
-            DBML.commit_and_close()
+                DBML.saveConfig('isLogged', 0)
             return True
         else:
             self.ids.password_input.background_color = (212 / 255, 25 / 255, 32 / 255, .6)
@@ -123,10 +121,8 @@ class POPUP(Popup):
 
     def modificar(self):
         horas, minutos, segundos, nome = self.validar_timer()
-        DBML.start_connection()
-        DBML.save_db(self.class_timer_name, f"{horas}:{minutos}:{segundos};{nome}")
-        DBML.commit_and_close()
-        LoadConfigs.update_dados(DBML.load_config())
+        DBML.saveConfig(self.class_timer_name, f"{horas}:{minutos}:{segundos};{nome}")
+        LoadConfigs.update_dados(DBML.loadConfig())
         if self.class_timer_name == "Timer1":
             self.lbl_timer.text, self.lbl_nome_timer.text = LoadConfigs.timers[0].split(';')
         if self.class_timer_name == "Timer2":
@@ -216,20 +212,12 @@ class JanelaConfig(Screen):
     @staticmethod
     def change_tema(tema):
         LoadConfigs.load_config_color_change(tema)
-        DBML.save_db('Teme', tema)
-
-    def on_leave(self):
-        DBML.commit_and_close()
-
-    def on_pre_enter(self):
-        DBML.start_connection()
+        DBML.saveConfig('theme', tema)
 
 
 class WindowManager(ScreenManager):
     def deslogar(self):
-        DBML.start_connection()
-        DBML.save_db('IsLogged', 0)
-        DBML.commit_and_close()
+        DBML.saveConfig('isLogged', 0)
         self.current = "login_screen"
 
 
