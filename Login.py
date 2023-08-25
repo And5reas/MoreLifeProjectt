@@ -1,5 +1,4 @@
 import requests
-import json
 
 class confirmLogin:
     def __init__(self):
@@ -10,8 +9,8 @@ class confirmLogin:
         tb_user = requisicao.json()
 
         for id_user in tb_user:
-            user_email = tb_user[id_user]["nm_email"]
+            user_email = tb_user[id_user]["nm_email"].lower()
             user_senha = tb_user[id_user]["nm_senha"]
-            if user_email == email and user_senha == senha:
+            if user_email == email.lower() and user_senha == senha:
                 return True
         return False

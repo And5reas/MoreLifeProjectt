@@ -44,7 +44,11 @@ class LoadConfigStuffs:
     def __init__(self, window_kivy_instance, config_list):
         self.window_kivy_instance = window_kivy_instance
         self.update_dados(config_list)
-        self.colors_teme = {'Dark Blue': (0, 0, 70/255, 1), 'Dark': (0, 0, 0, 1)}
+        self.colors_teme = {
+            'Dark Blue': (0, 0, 70/255, 1), 
+            'Dark': (0, 0, 0, 1),
+            'White': (1, 1, 1, 1,)
+            }
 
     def update_dados(self, lista):
         self.config_list = lista

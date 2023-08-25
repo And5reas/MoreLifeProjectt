@@ -100,6 +100,7 @@
                 text: "Sair"
                 text_size: self.width - 130/3, self.height - 130/3
                 on_press: app.root.current = "login_screen"
+                on_release: app.root.deslogar()
                 background_disabled_normal: "False"
                 Image:
                     id: eye_password_mask

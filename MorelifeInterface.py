@@ -17,6 +17,7 @@ DBML = DataBase.dataBase()
 DBML.createJson()
 LoadConfigs = LoadStuff.LoadConfigStuffs(Window, DBML.loadConfig())
 Login = Login.confirmLogin()
+colorThemeGlobal = (1, 1, 1, 1)
 
 
 # Dedinir janelas
@@ -88,6 +89,10 @@ class JanelaMain(Screen):
         if self.ids.tgb_start_read_beats.state == 'normal':
             ard_comunic_thread.event.clear()
             self.ids.tgb_start_read_beats.text = 'Começar'
+
+    def on_pre_enter(self, *args):
+        self.colorTheme = colorThemeGlobal
+        return super().on_pre_enter(*args)
 
 
 class POPUP(Popup):
@@ -200,17 +205,24 @@ class TIMER(BoxLayout):
 
 
 class JanelaAlertas(Screen):
-    pass
+    def on_pre_enter(self, *args):
+        self.colorTheme = colorThemeGlobal
+        return super().on_pre_enter(*args)
 
 
 class JanelaReport(Screen):
     def on_pre_enter(self):
-        pass
+        self.colorTheme = colorThemeGlobal
 
 
 class JanelaConfig(Screen):
     @staticmethod
     def change_tema(tema):
+        global colorThemeGlobal
+        if tema == "White":
+            colorThemeGlobal = (0, 0, 0, 1)
+        else:
+            colorThemeGlobal = (1, 1, 1, 1)
         LoadConfigs.load_config_color_change(tema)
         DBML.saveConfig('theme', tema)
 

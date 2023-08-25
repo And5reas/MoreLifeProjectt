@@ -1,4 +1,5 @@
 <JanelaMain>:
+    colorTheme: 1, 1, 1, 1
     name: "main_screen"
     GridLayout:
         size: root.width, root.height
@@ -22,7 +23,7 @@
 
                 Label:
                     text: "Deseja iniciar o MoreLife?"
-                    color: (1,1,1,1)
+                    color: root.colorTheme
 
                 ToggleButton:
                     id: tgb_start_read_beats
@@ -35,13 +36,13 @@
 
                 Label:
                     text: "Batimentos por minuto:"
-                    color: (1,1,1,1)
+                    color: root.colorTheme
 
                 Label:
                     id: Batimentos
                     text: 'Printar'
-                    color: (1,1,1,1)
+                    color: root.colorTheme
             Label:
                 id: user_state
                 text: "Coisas"
-                color: (1,1,1,1)
+                color: root.colorTheme
