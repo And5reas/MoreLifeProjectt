@@ -53,6 +53,7 @@
                 do_wrap: False
                 write_tab: False
                 on_text: root.validate_color()
+                on_text_validate: if root.btn_login(): app.root.current = "main_screen"
 
             LblLogin:
                 text: "Senha:"
@@ -71,6 +72,7 @@
                 do_wrap: False
                 write_tab: False
                 on_text: root.validate_color()
+                on_text_validate: if root.btn_login(): app.root.current = "main_screen"
 
             LblLogin:
                 # Label para pular uma coluna do grid
