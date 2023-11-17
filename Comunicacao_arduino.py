@@ -2,7 +2,8 @@ from threading import Event
 from threading import Thread
 import serial
 import serial.tools.list_ports
-
+from datetime import datetime
+from time import sleep
 
 class Reading:
     serialArd = serial.Serial()
@@ -16,6 +17,11 @@ class Reading:
     ports = None
     user_state = None
     tgb_start_read_beats = None
+    btmList = []
+    difference = 0
+    diff = []
+    start = 0
+    end = 0
 
     def iniciar(self, lbl_kivy, tgb_kivy, user_state, tgb_start_read_beats):
         self.ports = serial.tools.list_ports.comports()
@@ -63,25 +69,36 @@ class Reading:
 
     def readingSerialArd(self):
         while self.event.is_set():
+            self.start = datetime.now().minute
             text = self.serialArd.readline()
-            btm = int(text.decode('utf'))
+            try:
+                btm = int(text.decode('utf'))
+            except:
+                pass
             self.ans = str(btm)
             self.lbl_kivy.text = str(self.ans)
+            if (self.start != self.end):
+                self.btmList.append(btm)
+                self.diff.append(f'{datetime.now().hour}:{self.start}')
+            self.mediabtm = sum(self.btmList)/len(self.btmList)
             self.MonitorarBTM(btm)
+            self.end = datetime.now().minute
+            sleep(0.05)
 
     def MonitorarBTM(self, btm):
         if btm > 100:
             self.user_state.text = "Perigo"
-            self.event.clear()
-            self.tgb_start_read_beats.state = "normal"
-            import simpleaudio as sa
-            wave_object = sa.WaveObject.from_wave_file('alert.wav')
-            play_object = wave_object.play()
-            play_object.wait_done()
-            import win32api
-            import win32con
-            win32api.MessageBox(0, 'Seus batimentos estão acima de 170, notificações foram emviadas para as pessoas'
-                                   ' cadastradas', 'BTM Acima de 170!', win32con.MB_ICONEXCLAMATION)
+            # self.event.clear()
+            # self.tgb_start_read_beats.state = "normal"
+            # import simpleaudio as sa
+            # wave_object = sa.WaveObject.from_wave_file('alert.wav')
+            # play_object = wave_object.play()
+            # play_object.wait_done()
+            # import win32api
+            # import win32con
+            # win32api.MessageBox(0, 'Seus batimentos estão acima de 170, notificações foram emviadas para as pessoas'
+            #                        ' cadastradas', 'BTM Acima de 170!', win32con.MB_ICONEXCLAMATION)
         elif btm > 90:
             self.user_state.text = "Batimentos acima do normal"
-        return False
+        return True # Voltar para FALSE
+        

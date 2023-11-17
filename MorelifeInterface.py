@@ -10,6 +10,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 from kivy.core.window import Window
+from Relatorios import Reports
 
 # Declarando variáveis e objetos
 Wi = LoadStuff.WindowInformation()
@@ -210,9 +211,19 @@ class JanelaAlertas(Screen):
         return super().on_pre_enter(*args)
 
 
-class JanelaReport(Screen):
+class JanelaReport(Screen, Reports):
+
     def on_pre_enter(self):
         self.colorTheme = colorThemeGlobal
+    
+    def gerar_relatorio(self):
+        # Reports.clickkbutton(self)
+        try:
+            Reports.bl = ard_comunic_thread.btmList
+            Reports.d = ard_comunic_thread.diff
+            Reports.create_image(self)
+        except:
+            pass
 
 
 class JanelaConfig(Screen):

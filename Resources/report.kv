@@ -15,9 +15,23 @@
             btn_color4: .5, .5, .5, 1
             
         GridLayout:
-            cols: 4
-            rows: 4
+            rows: 2
 
-            Label:
-                text: "Relatórios"
-                color: root.colorTheme
+            BoxLayout:
+                orientation: 'horizontal'
+
+                Label:
+                    id: lbl_msg
+                    text: "Clique para gerar um relatório:"
+                    color: 1,1,1,1
+                    textSize: 30
+                    pos_hint: {'x': .5, 'y': .35}
+
+                Button:
+                    id: btn_gerar_relatorio
+                    text: "Gráfico"
+                    on_press: root.gerar_relatorio()
+                    pos_hint: {'center_x': 0.5, 'y': 0.8}
+                    size_hint: None, None
+                    size: 260, 50
+                    padding: 20
