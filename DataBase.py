@@ -27,7 +27,8 @@ class dataBase:
                 "Timer1": "00:00:00;NOME",
                 "Timer2": "00:00:00;NOME",
                 "Timer3": "00:00:00;NOME",
-                "Timer4": "00:00:00;NOME"
+                "Timer4": "00:00:00;NOME",
+                "user_id": "",
             }
             obj_json = json.dumps(table, indent=2)
             with open(self.pathDB, "w") as file:
@@ -45,3 +46,17 @@ class dataBase:
         with open(self.pathDB, encoding='utf-8') as file:
             dataConfig = json.load(file)
             return dataConfig
+        
+    def saveUserID(self, id):
+        with open(self.pathDB, encoding='utf-8') as file:
+            dataConfig = json.load(file)
+            dataConfig['user_id'] = id
+            dataConfig = json.dumps(dataConfig, indent=2)
+        with open(self.pathDB, "w") as file:
+            file.write(dataConfig)
+
+    @staticmethod
+    def getsaveUser():
+        with open(f"{path_data_base}\\Configuration.json", encoding='utf-8') as file:
+            dataConfig = json.load(file)
+            return dataConfig['user_id']

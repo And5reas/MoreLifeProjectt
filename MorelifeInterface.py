@@ -32,7 +32,7 @@ class JanelaLogin(Screen):
         user_email = self.ids.email_input.text
         user_password = self.ids.password_input.text
 
-        if Login.Check(user_email, user_password):
+        if Login.Check(user_email, user_password, DBML):
             self.ids.error_login.text = ""
             if self.ids.check_keep_login.active:
                 DBML.saveConfig('isLogged', 1)

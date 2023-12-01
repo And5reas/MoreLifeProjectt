@@ -2,7 +2,10 @@ from threading import Event
 from threading import Thread
 import serial
 import serial.tools.list_ports
+import requests
+from DataBase import dataBase
 from datetime import datetime
+from twilio.rest import Client
 from time import sleep
 
 class Reading:
@@ -22,6 +25,7 @@ class Reading:
     diff = []
     start = 0
     end = 0
+    phoneNunber = None
 
     def iniciar(self, lbl_kivy, tgb_kivy, user_state, tgb_start_read_beats):
         self.ports = serial.tools.list_ports.comports()
@@ -87,17 +91,23 @@ class Reading:
 
     def MonitorarBTM(self, btm):
         if btm > 100:
+            self.event.clear()
+            self.tgb_start_read_beats.state = "normal"
+            requisicao = requests.get("https://morelife-f4ffa-default-rtdb.firebaseio.com/tb_responsavel/.json")
+            tb_responsavel = requisicao.json()
+
+            for id_responsavel in tb_responsavel:
+                id_user = tb_responsavel[id_responsavel]['id_user']
+                if id_user == dataBase.getsaveUser():
+                    self.phoneNunber = F"+55{tb_responsavel[id_responsavel]['nb_cell']}"
+
             self.user_state.text = "Perigo"
-            # self.event.clear()
-            # self.tgb_start_read_beats.state = "normal"
-            # import simpleaudio as sa
-            # wave_object = sa.WaveObject.from_wave_file('alert.wav')
-            # play_object = wave_object.play()
-            # play_object.wait_done()
-            # import win32api
-            # import win32con
-            # win32api.MessageBox(0, 'Seus batimentos estão acima de 170, notificações foram emviadas para as pessoas'
-            #                        ' cadastradas', 'BTM Acima de 170!', win32con.MB_ICONEXCLAMATION)
+
+            client = Client('AC6f856637664320539b3980367adcaad5', '22b6ba485fe31baab4157bafe8b72147')
+
+            client.messages.create(from_='+14437207354',
+                        to=self.phoneNunber,
+                        body=F'MoreLife: O usuário está em perigo')
         elif btm > 90:
             self.user_state.text = "Batimentos acima do normal"
         return True # Voltar para FALSE
