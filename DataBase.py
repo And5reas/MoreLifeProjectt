@@ -2,8 +2,8 @@ import os
 from sys import platform
 
 # Fazer uma verificação rápida se existe o directório do programa
-if platform == 'linux2':
-    path_data_base = os.path.expanduser('~') + '\\MoreLife'
+if platform == 'linux':
+    path_data_base = os.path.expanduser('~') + '/MoreLife'
     if not os.path.isdir(path_data_base):
         os.mkdir(path_data_base)
 elif platform == 'win32':

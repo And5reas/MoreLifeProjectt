@@ -1,7 +1,7 @@
 from threading import Thread
 from threading import Event
 from time import sleep
-from winotify import Notification, audio
+# from winotify import Notification, audio
 
 
 class MLTimer:
@@ -24,12 +24,12 @@ class MLTimer:
         self.default_timer = lbl_tempo.text
         self.segundos = self.horas * 3600 + self.minutos * 60 + int(sec)
         self.timerImage = instance_timer_btnPlay
-        self.notificacao = Notification(app_id="MoreLife",
-                                        title="MoreLife Alarme",
-                                        msg="Tempo expirado",
-                                        duration="short")
-        self.notificacao.add_actions(label="Ok")
-        self.notificacao.set_audio(audio.LoopingAlarm, loop=True)
+        # self.notificacao = Notification(app_id="MoreLife",
+                                        # title="MoreLife Alarme",
+                                        # msg="Tempo expirado",
+                                        # duration="short")
+        # self.notificacao.add_actions(label="Ok")
+        # self.notificacao.set_audio(audio.LoopingAlarm, loop=True)
         b = Thread(target=self.func_timer)
         b.start()
 
@@ -72,7 +72,7 @@ class MLTimer:
             sleep(1)
             self.lbl_timer.animation_ellipse = 360
             self.lbl_timer.text = self.default_timer
-            self.timerImage.source = "Resources\\Imgs\\Play.png"
+            self.timerImage.source = "Resources/Imgs/Play.png"
         self.event.clear()
 
         

@@ -54,10 +54,10 @@ class JanelaLogin(Screen):
     def remove_password_mask(self):
         if not self.checar:
             self.checar = True
-            self.ids.eye_password_mask.source = "Resources\\Imgs\\zoio_fechado.png"
+            self.ids.eye_password_mask.source = "Resources/Imgs/zoio_fechado.png"
         else:
             self.checar = False
-            self.ids.eye_password_mask.source = "Resources\\Imgs\\zoio_aberto.png"
+            self.ids.eye_password_mask.source = "Resources/Imgs/zoio_aberto.png"
         self.ids.password_input.password = self.checar
 
     def keep_login(self, radio_button):
@@ -144,11 +144,11 @@ class TIMER(BoxLayout):
     checar = False
 
     def set_img_pause(self):
-        self.ids['imgPlay'].source = "Resources\\Imgs\\Pause.png"
+        self.ids['imgPlay'].source = "Resources/Imgs/Pause.png"
         self.checar = True
 
     def set_img_start(self):
-        self.ids['imgPlay'].source = "Resources\\Imgs\\Play.png"
+        self.ids['imgPlay'].source = "Resources/Imgs/Play.png"
         self.checar = False
 
     def load_timer(self, name):
